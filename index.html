@@ -10,6 +10,7 @@
   --bg:#F4F1EA;--bg2:#EBE8E0;--surface:#FFF;--border:#D6D1C4;--border2:#B8B2A5;
   --text:#18160F;--text2:#4A4640;--text3:#7A756E;
   --accent:#C8390A;--blue:#0A4F8A;--gold:#B8880A;--green:#1A7A42;--tg:#0088CC;
+  --tf:#2563EB;--cc:#7C3AED;
   --ss:0 1px 2px rgba(0,0,0,.06),0 2px 8px rgba(0,0,0,.04);
   --sm:0 2px 4px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.07);
   --r:4px;
@@ -38,7 +39,6 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .auto-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;border:1px solid var(--border2);color:var(--text3);cursor:pointer;transition:all .15s;user-select:none}
 .auto-badge.on{background:#EAF9F1;border-color:#1A7A42;color:#1A7A42}
 
-/* Tab nav */
 .tab-nav{display:flex;gap:0;background:var(--bg2);border-bottom:2px solid var(--border);position:sticky;top:50px;z-index:190}
 .tab-btn{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;padding:10px 20px;border:none;background:none;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
 .tab-btn.active{background:var(--surface);color:var(--text);border-bottom-color:var(--text)}
@@ -110,22 +110,28 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .section-badge{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:2px}
 .section-badge.sheets{background:#E8F5E9;color:var(--green);border:1px solid #A8DFBC}
 .section-badge.tg{background:#E1F4FF;color:var(--tg);border:1px solid #b3dff0}
+.section-badge.tf{background:#EFF6FF;color:var(--tf);border:1px solid #93C5FD}
+.section-badge.cc{background:#F5F3FF;color:var(--cc);border:1px solid #C4B5FD}
 .tg-notice{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 13px;margin-bottom:12px;line-height:1.6}
 
 .feeds-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .feeds-grid.list-view{grid-template-columns:1fr}
 .tg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .tg-grid.list-view{grid-template-columns:1fr}
-@media(max-width:1600px){.tg-grid{grid-template-columns:repeat(4,1fr)}}
+.direct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.direct-grid.list-view{grid-template-columns:1fr}
+@media(max-width:1600px){.tg-grid{grid-template-columns:repeat(4,1fr)}.direct-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1400px){.feeds-grid{grid-template-columns:repeat(3,1fr)}.tg-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:1050px){.feeds-grid{grid-template-columns:repeat(2,1fr)}.tg-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.feeds-grid,.tg-grid{grid-template-columns:1fr}}
+@media(max-width:1050px){.feeds-grid{grid-template-columns:repeat(2,1fr)}.tg-grid{grid-template-columns:repeat(2,1fr)}.direct-grid{grid-template-columns:1fr}}
+@media(max-width:720px){.feeds-grid,.tg-grid,.direct-grid{grid-template-columns:1fr}}
 
 .feed-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--ss);transition:box-shadow .2s,opacity .3s;display:flex;flex-direction:column;animation:fadeUp .3s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .feed-card:hover{box-shadow:var(--sm)}
 .feed-card.loading{opacity:.55}
 .feed-card.tg-card{border-left:3px solid var(--tg)}
+.feed-card.tf-card{border-left:3px solid var(--tf)}
+.feed-card.cc-card{border-left:3px solid var(--cc)}
 .card-head{padding:10px 13px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .card-color{width:3px;height:26px;border-radius:2px;flex-shrink:0}
 .card-favicon{width:14px;height:14px;border-radius:2px;flex-shrink:0;object-fit:contain}
@@ -135,12 +141,17 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .pill-live{background:#EAF9F1 !important;color:#1A7A42 !important}
 .pill-sheets{background:#E8F5E9 !important;color:var(--green) !important}
 .pill-tg{background:#E1F4FF !important;color:var(--tg) !important;border:1px solid #b3dff0}
+.pill-tf{background:#EFF6FF !important;color:var(--tf) !important;border:1px solid #93C5FD}
+.pill-cc{background:#F5F3FF !important;color:var(--cc) !important;border:1px solid #C4B5FD}
 .pill-loading{background:#FFF8E1 !important;color:#B8880A !important;animation:blink .8s ease-in-out infinite}
 .pill-error{background:#FFF0F0 !important;color:var(--accent) !important}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
 .card-cnt{font-family:var(--mono);font-size:10px;color:var(--text3)}
-.tg-info-bar{display:flex;align-items:center;gap:6px;padding:5px 13px;background:#F0FAFF;border-bottom:1px solid #D0EEF8;font-family:var(--mono);font-size:9px;color:var(--tg)}
-.tg-info-bar a{color:var(--tg);text-decoration:none;font-weight:500}.tg-info-bar a:hover{text-decoration:underline}
+.tg-info-bar{display:flex;align-items:center;gap:6px;padding:5px 13px;border-bottom:1px solid #D0EEF8;font-family:var(--mono);font-size:9px}
+.tg-info-bar.tg{background:#F0FAFF;color:var(--tg)}
+.tg-info-bar.tf{background:#EFF6FF;color:var(--tf)}
+.tg-info-bar.cc{background:#F5F3FF;color:var(--cc)}
+.tg-info-bar a{text-decoration:none;font-weight:500}.tg-info-bar a:hover{text-decoration:underline}
 .news-list-inner{flex:1;overflow-y:auto;max-height:280px}
 .news-list-inner::-webkit-scrollbar{width:3px}
 .news-list-inner::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
@@ -150,6 +161,10 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .news-item.is-new{background:#F5FAFF}
 .news-item.tg-msg{background:#FAFEFF}
 .news-item.tg-msg:hover{background:#F0FAFF}
+.news-item.tf-msg{background:#FAFBFF}
+.news-item.tf-msg:hover{background:#EFF6FF}
+.news-item.cc-msg{background:#FDFAFF}
+.news-item.cc-msg:hover{background:#F5F3FF}
 .ni-title{font-size:13px;font-weight:400;line-height:1.45;color:var(--text);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .ni-time{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px}
 .tg-views{font-family:var(--mono);font-size:9px;color:var(--tg);margin-top:2px}
@@ -160,20 +175,20 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .card-action-btn{font-family:var(--mono);font-size:9px;background:none;border:none;cursor:pointer;padding:0;text-decoration:underline}
 .card-action-btn.blue{color:var(--blue)}.card-action-btn.blue:hover{color:var(--text)}
 .card-action-btn.tgbtn{color:var(--tg)}.card-action-btn.tgbtn:hover{color:var(--text)}
+.card-action-btn.tfbtn{color:var(--tf)}.card-action-btn.tfbtn:hover{color:var(--text)}
+.card-action-btn.ccbtn{color:var(--cc)}.card-action-btn.ccbtn:hover{color:var(--text)}
 .card-action-btn:disabled{opacity:.4;cursor:not-allowed;text-decoration:none}
 
 .skeleton{background:linear-gradient(90deg,var(--bg) 25%,var(--border) 50%,var(--bg) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:3px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* ── TRENDING PANEL ────────────────────────────────────────────────── */
+/* ── TRENDING PANEL ── */
 .trend-content{flex:1;min-width:0;padding:22px 24px}
 .trend-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:1100px){.trend-grid{grid-template-columns:1fr}}
-
 .trend-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;text-align:center}
 .trend-stat-val{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text)}
 .trend-stat-lbl{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-top:3px}
-
 .story-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--ss);margin-bottom:16px;animation:fadeUp .3s ease both}
 .story-card:hover{box-shadow:var(--sm)}
 .story-rank-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border)}
@@ -185,9 +200,7 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .story-count-pill{font-family:var(--mono);font-size:10px;background:#EAF9F1;color:var(--green);border:1px solid #A8DFBC;padding:3px 10px;border-radius:12px;flex-shrink:0;white-space:nowrap}
 .story-coverage-bar{height:3px;background:var(--bg2)}
 .story-coverage-fill{height:3px;transition:width .6s cubic-bezier(.22,.61,.36,1)}
-.fill-gold{background:var(--gold)}
-.fill-silver{background:var(--border2)}
-.fill-bronze{background:var(--accent)}
+.fill-gold{background:var(--gold)}.fill-silver{background:var(--border2)}.fill-bronze{background:var(--accent)}
 .story-body{padding:14px 16px;display:grid;grid-template-columns:1fr 280px;gap:20px}
 @media(max-width:900px){.story-body{grid-template-columns:1fr}}
 .story-timeline{border-left:2px solid var(--border);padding-left:14px}
@@ -201,20 +214,16 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .first-badge{font-family:var(--mono);font-size:8px;font-weight:600;background:var(--blue);color:#fff;padding:1px 7px;border-radius:2px;letter-spacing:.5px}
 .tl-title{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.4}
 .story-right{display:flex;flex-direction:column;gap:12px}
-.story-sources-section{}
 .sources-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
 .sources-pills{display:flex;flex-wrap:wrap;gap:6px}
 .src-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text2)}
 .src-pill-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.matched-kw-section{}
 .kw-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
 .kw-pills{display:flex;flex-wrap:wrap;gap:5px}
 .kw-pill{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:3px;background:var(--bg2);color:var(--text3)}
 .kw-pill.match-hot{background:#FFF0F0;color:var(--accent)}
 .kw-pill.match-warm{background:#FFF8E1;color:var(--gold)}
 .kw-pill.match-cool{background:#E8F0FE;color:var(--blue)}
-
-/* Word cloud */
 .wordcloud-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px}
 .wc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .wc-title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--text)}
@@ -227,7 +236,6 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .wc-word.tier-2{color:var(--blue);font-weight:500}
 .wc-word.tier-3{color:var(--gold);font-weight:400}
 .wc-word.tier-4{color:var(--text3);font-weight:300}
-
 .trend-empty{text-align:center;padding:60px 20px;font-family:var(--mono);font-size:13px;color:var(--text3);line-height:2}
 .trend-auto-notice{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 14px;margin-bottom:16px;line-height:1.6}
 
@@ -254,7 +262,6 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
   </div>
 </header>
 
-<!-- Tab Navigation -->
 <div class="tab-nav">
   <button class="tab-btn active" id="tab-feeds" onclick="switchTab('feeds')">📰 Live Feeds</button>
   <button class="tab-btn" id="tab-trending" onclick="switchTab('trending')">🔥 Trending Stories</button>
@@ -268,13 +275,8 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
     </div>
     <div class="modal-body">
       <div>
-        <div class="field-label">Apps Script Web App URL</div>
-        <div class="field-hint">Your deployed Google Apps Script endpoint.<br>Format: https://script.google.com/macros/s/YOUR_ID/exec</div>
-        <input class="field-input" type="text" id="apiUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
-      </div>
-      <div>
         <div class="field-label">Auto-refresh interval</div>
-        <div class="field-hint">How often to sync RSS from Sheets (minutes).</div>
+        <div class="field-hint">How often to sync all feeds (minutes).</div>
         <select class="field-input" id="intervalInput" style="cursor:pointer">
           <option value="2">2 minutes</option>
           <option value="5" selected>5 minutes</option>
@@ -301,6 +303,7 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
     </div>
     <div class="sb-section"><div class="sb-title">Topics</div><div id="sbTopics"></div></div>
     <div class="sb-section"><div class="sb-title">RSS Sources</div><div id="sbSources"></div></div>
+    <div class="sb-section"><div class="sb-title">Direct Feeds</div><div id="sbDirectSources"></div></div>
     <div class="sb-section"><div class="sb-title">Telegram</div><div id="sbTgSources"></div></div>
   </aside>
 
@@ -319,7 +322,7 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
         <button class="view-btn"        id="vList" onclick="setView('list')">☰</button>
       </div>
     </div>
-    <div id="apiBanner" class="api-banner loading">⟳ Connecting to Google Sheets API…</div>
+    <div id="apiBanner" class="api-banner loading">⟳ Connecting to feeds…</div>
     <div class="update-bar">
       <span>Last updated: <b id="lastUpdatedLabel">–</b></span>
       <span id="liveBadgeWrap"></span>
@@ -328,7 +331,7 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
   </div>
 </div>
 
-<!-- ── TRENDING PANE ── -->
+<!-- TRENDING PANE -->
 <div class="layout" id="trendingPane" style="display:none">
   <aside class="sidebar">
     <div class="sb-section">
@@ -352,20 +355,11 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
         </select>
       </div>
     </div>
-    <div class="sb-section">
-      <div class="sb-title">Top Keywords</div>
-      <div id="sbKeywords" style="padding:4px 0"></div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-title">Coverage by source</div>
-      <div id="sbCoverage" style="padding:4px 0"></div>
-    </div>
+    <div class="sb-section"><div class="sb-title">Top Keywords</div><div id="sbKeywords" style="padding:4px 0"></div></div>
+    <div class="sb-section"><div class="sb-title">Coverage by source</div><div id="sbCoverage" style="padding:4px 0"></div></div>
   </aside>
-
   <div class="trend-content">
-    <div class="trend-auto-notice">
-      🔥 Trending engine clusters articles with ≥3 matching normalised words. Sorted by coverage count. Updates live with each refresh — or use <b>Auto</b> for continuous monitoring.
-    </div>
+    <div class="trend-auto-notice">🔥 Trending engine clusters articles with ≥3 matching normalised words across all feeds — RSS, TechFlow, ChainCatcher & Telegram. Updates live with each refresh.</div>
     <div id="trendStats" class="trend-grid"></div>
     <div id="wordcloudPanel"></div>
     <div id="trendingContent"></div>
@@ -382,32 +376,74 @@ const SOURCE_META = {
   'Bitcoin News'   : { color:'#8A2A8A', domain:'news.bitcoin.com'   },
 };
 
+// ── TELEGRAM SOURCES ──────────────────────────────────────────────────────────
 const TG_SOURCES = [
-  {id:'tg_wue', name:'Wu Blockchain EN', handle:'wublockchainenglish',       url:'https://t.me/s/wublockchainenglish',       color:'#0088CC', emoji:'📡'},
-  {id:'tg_cmc', name:'CoinMarketCap',    handle:'CoinMarketCapAnnouncements',url:'https://t.me/s/CoinMarketCapAnnouncements',color:'#3861FB', emoji:'📊'},
-  {id:'tg_cdf', name:'CryptoDiffer',     handle:'cryptodiffer',              url:'https://t.me/s/cryptodiffer',              color:'#8E44AD', emoji:'🔍'},
-  {id:'tg_pnx', name:'PNXGRP',          handle:'pnxgrp',                    url:'https://t.me/s/pnxgrp',                    color:'#16A085', emoji:'💹'},
-  {id:'tg_cdp', name:'CryptoDep',       handle:'cryptodep',                 url:'https://t.me/s/cryptodep',                 color:'#2C3E50', emoji:'📈'},
-  {id:'tg_wg',  name:'Watcher Guru',    handle:'WatcherGuru',               url:'https://t.me/s/WatcherGuru',               color:'#1A7A42', emoji:'👁'},
-  {id:'tg_ori', name:'Oriole Insights', handle:'OrioleInsights',            url:'https://t.me/s/OrioleInsights',            color:'#C0392B', emoji:'🦜'},
-  {id:'tg_icd', name:'ICO Drops',       handle:'icodrops',                  url:'https://t.me/s/icodrops',                  color:'#D4AC0D', emoji:'💎'},
-  {id:'tg_alt', name:'Altcoin Alerts',  handle:'Altcoin_Alerts',            url:'https://t.me/s/Altcoin_Alerts',            color:'#E74C3C', emoji:'🚨'},
+  {id:'tg_wue', name:'Wu Blockchain EN', handle:'wublockchainenglish',         url:'https://t.me/s/wublockchainenglish',         color:'#0088CC', emoji:'📡'},
+  {id:'tg_cmc', name:'CoinMarketCap',    handle:'CoinMarketCapAnnouncements',  url:'https://t.me/s/CoinMarketCapAnnouncements',  color:'#3861FB', emoji:'📊'},
+  {id:'tg_cdf', name:'CryptoDiffer',     handle:'cryptodiffer',                url:'https://t.me/s/cryptodiffer',                color:'#8E44AD', emoji:'🔍'},
+  {id:'tg_pnx', name:'PNXGRP',          handle:'pnxgrp',                      url:'https://t.me/s/pnxgrp',                      color:'#16A085', emoji:'💹'},
+  {id:'tg_cdp', name:'CryptoDep',       handle:'cryptodep',                   url:'https://t.me/s/cryptodep',                   color:'#2C3E50', emoji:'📈'},
+  {id:'tg_wg',  name:'Watcher Guru',    handle:'WatcherGuru',                 url:'https://t.me/s/WatcherGuru',                 color:'#1A7A42', emoji:'👁'},
+  {id:'tg_ori', name:'Oriole Insights', handle:'OrioleInsights',              url:'https://t.me/s/OrioleInsights',              color:'#C0392B', emoji:'🦜'},
+  {id:'tg_icd', name:'ICO Drops',       handle:'icodrops',                    url:'https://t.me/s/icodrops',                    color:'#D4AC0D', emoji:'💎'},
+  {id:'tg_alt', name:'Altcoin Alerts',  handle:'Altcoin_Alerts',              url:'https://t.me/s/Altcoin_Alerts',              color:'#E74C3C', emoji:'🚨'},
+  {id:'tg_pan', name:'PA News',         handle:'ChannelPANews',               url:'https://t.me/s/ChannelPANews',               color:'#F39C12', emoji:'📰'},
+  {id:'tg_tbb', name:'The BlockBeats',  handle:'theblockbeats',               url:'https://t.me/s/theblockbeats',               color:'#27AE60', emoji:'🎵'},
+  {id:'tg_tfd', name:'TechFlow Daily',  handle:'TechFlowDaily',               url:'https://t.me/s/TechFlowDaily',               color:'#2980B9', emoji:'⚡'},
+  {id:'tg_bci', name:'BlockCast',       handle:'blockcastit',                 url:'https://t.me/s/blockcastit',                 color:'#6C3483', emoji:'📻'},
+];
+
+// ── DIRECT API FEEDS (TechFlow RSS + ChainCatcher API) ────────────────────────
+const DIRECT_FEEDS = [
+  {
+    id: 'df_techflow',
+    name: 'TechFlow Post',
+    type: 'rss_proxy',
+    url: 'https://www.techflowpost.com/rss.xml',
+    color: '#2563EB',
+    domain: 'techflowpost.com',
+    badge: 'tf',
+    emoji: '⚡',
+    cardClass: 'tf-card',
+    pillClass: 'pill-tf',
+    infoColor: 'tf',
+    actionClass: 'tfbtn',
+    desc: 'techflowpost.com · RSS',
+  },
+  {
+    id: 'df_chaincatcher',
+    name: 'ChainCatcher',
+    type: 'json_api',
+    url: 'https://api.chaincatcher.com/v1/open-api/news-flash?type=article&page=1&size=100&lang=en',
+    color: '#7C3AED',
+    domain: 'chaincatcher.com',
+    badge: 'cc',
+    emoji: '🔗',
+    cardClass: 'cc-card',
+    pillClass: 'pill-cc',
+    infoColor: 'cc',
+    actionClass: 'ccbtn',
+    desc: 'api.chaincatcher.com · JSON',
+  },
 ];
 
 const ALL_SOURCES_META = {
   ...SOURCE_META,
-  'Wu Blockchain EN': {color:'#0088CC'}, 'CoinMarketCap': {color:'#3861FB'},
-  'CryptoDiffer': {color:'#8E44AD'}, 'PNXGRP': {color:'#16A085'},
-  'CryptoDep': {color:'#2C3E50'}, 'Watcher Guru': {color:'#1A7A42'},
-  'Oriole Insights': {color:'#C0392B'}, 'ICO Drops': {color:'#D4AC0D'},
-  'Altcoin Alerts': {color:'#E74C3C'},
+  'TechFlow Post':   { color:'#2563EB' },
+  'ChainCatcher':    { color:'#7C3AED' },
+  'Wu Blockchain EN':{ color:'#0088CC' }, 'CoinMarketCap':{ color:'#3861FB' },
+  'CryptoDiffer':    { color:'#8E44AD' }, 'PNXGRP':       { color:'#16A085' },
+  'CryptoDep':       { color:'#2C3E50' }, 'Watcher Guru': { color:'#1A7A42' },
+  'Oriole Insights': { color:'#C0392B' }, 'ICO Drops':    { color:'#D4AC0D' },
+  'Altcoin Alerts':  { color:'#E74C3C' }, 'PA News':      { color:'#F39C12' },
+  'The BlockBeats':  { color:'#27AE60' }, 'TechFlow Daily':{ color:'#2980B9' },
+  'BlockCast':       { color:'#6C3483' },
 };
 
 const ALERT_KW = ['hack','exploit','sec','arrest','crash','breach','seized','bankrupt','rug','fraud'];
 const HACK_KW  = ['hack','exploit','breach','attack','steal','drain','compromise'];
 const FUND_KW  = ['fund','raise','invest','million','billion','round','capital','vc'];
 
-// Stopwords for normalisation
 const STOP_WORDS = new Set([
   'the','a','an','is','are','was','were','be','been','being','have','has','had',
   'do','does','did','will','would','could','should','may','might','shall','can',
@@ -422,267 +458,56 @@ const STOP_WORDS = new Set([
   'could','report','says','amid','hit','rise','fall','jump','drop','move','warn'
 ]);
 
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwah4yom6nbaArcSOjjebF9Oz5ZrmxsWL-iDB9Q57-S2AtLFcree9j7SN43dW4ZlF_ACQ/exec';
+
+// ── PROXY HELPERS ─────────────────────────────────────────────────────────────
+function makeProxies(url) {
+  const enc = encodeURIComponent(url);
+  return [
+    async () => { const r=await fetch(`https://api.allorigins.win/get?url=${enc}`,{signal:AbortSignal.timeout(12000)}); if(!r.ok) throw new Error('allorigins '+r.status); const j=await r.json(); if(!j.contents||j.contents.length<100) throw new Error('allorigins empty'); return j.contents; },
+    async () => { const r=await fetch(`https://corsproxy.io/?${enc}`,{signal:AbortSignal.timeout(12000)}); if(!r.ok) throw new Error('corsproxy '+r.status); const t=await r.text(); if(t.length<100) throw new Error('corsproxy empty'); return t; },
+    async () => { const r=await fetch(`https://thingproxy.freeboard.io/fetch/${url}`,{signal:AbortSignal.timeout(12000)}); if(!r.ok) throw new Error('thingproxy '+r.status); const t=await r.text(); if(t.length<100) throw new Error('thingproxy empty'); return t; },
+    async () => { const r=await fetch(`https://api.codetabs.com/v1/proxy?quest=${enc}`,{signal:AbortSignal.timeout(12000)}); if(!r.ok) throw new Error('codetabs '+r.status); const t=await r.text(); if(t.length<100) throw new Error('codetabs empty'); return t; },
+  ];
+}
+
+async function fetchWithProxy(url) {
+  let html = null;
+  try { html = await Promise.any(makeProxies(url).map(fn=>fn())); } catch(_) {
+    for (const fn of makeProxies(url)) { try { html=await fn(); break; } catch(e) { console.warn('[proxy]',e.message); } }
+  }
+  return html;
+}
+
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let allArticles   = [];
-let tgBySource    = {};
-let tgUpdatedAt   = {};
-let tgLive        = {};
-let tgFetchingSet = new Set();
-let lastFetchedAt = null;
-let apiOnline     = false;
-let isFetchingRSS = false;
+let allArticles      = [];    // from Google Sheets RSS
+let directByFeed     = {};    // { df_techflow: [...], df_chaincatcher: [...] }
+let directUpdatedAt  = {};
+let directLive       = {};
+let directFetching   = new Set();
+let tgBySource       = {};
+let tgUpdatedAt      = {};
+let tgLive           = {};
+let tgFetchingSet    = new Set();
+let lastFetchedAt    = null;
+let apiOnline        = false;
+let isFetchingRSS    = false;
 let curFilter = 'all', curView = 'grid', curTopic = null;
 let autoHandle = null, autoOn = false;
 let curTab = 'feeds';
 
-// ── TRENDING ENGINE ───────────────────────────────────────────────────────────
-
-function normalizeTitle(title) {
-  return title.toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .split(/\s+/)
-    .filter(w => w.length > 3 && !STOP_WORDS.has(w))
-    .join(' ');
-}
-
-function getTitleWords(title) {
-  return normalizeTitle(title).split(/\s+/).filter(Boolean);
-}
-
-function countSharedWords(titleA, titleB) {
-  const wa = new Set(getTitleWords(titleA));
-  const wb = getTitleWords(titleB);
-  return wb.filter(w => wa.has(w));
-}
-
-function getGlobalWordFreq(articles) {
-  const freq = {};
-  articles.forEach(a => {
-    getTitleWords(a.title || '').forEach(w => { freq[w] = (freq[w] || 0) + 1; });
-  });
-  return freq;
-}
-
-function srcColor(name) {
-  return (ALL_SOURCES_META[name] || {}).color || '#888';
-}
-
-function clusterArticles(articles, minWords) {
-  const used = new Array(articles.length).fill(false);
-  const clusters = [];
-
-  for (let i = 0; i < articles.length; i++) {
-    if (used[i]) continue;
-    const cluster = { articles: [articles[i]], matchedWords: new Set() };
-    used[i] = true;
-
-    for (let j = i + 1; j < articles.length; j++) {
-      if (used[j]) continue;
-      const shared = countSharedWords(articles[i].title || '', articles[j].title || '');
-      if (shared.length >= minWords) {
-        cluster.articles.push(articles[j]);
-        shared.forEach(w => cluster.matchedWords.add(w));
-        used[j] = true;
-      }
-    }
-
-    if (cluster.articles.length > 1) clusters.push(cluster);
-  }
-
-  clusters.sort((a, b) => b.articles.length - a.articles.length);
-  return clusters.slice(0, 3);
-}
-
-function getAllArticlesForTrending() {
-  // Merge RSS + TG into unified list
-  const rss = allArticles.map(a => ({
-    title: a.title || '',
-    source: a.source || 'Unknown',
-    ts: a.pubDate ? new Date(a.pubDate).getTime() : 0,
-    url: a.link || '#',
-    type: 'rss'
-  }));
-  const tg = [];
-  TG_SOURCES.forEach(src => {
-    (tgBySource[src.id] || []).forEach(msg => {
-      tg.push({ title: msg.title || '', source: src.name, ts: msg.ts || 0, url: msg.url || '#', type: 'tg' });
-    });
-  });
-  return [...rss, ...tg];
-}
-
-function renderTrending() {
-  const minWords    = parseInt(document.getElementById('minWordsInput').value, 10);
-  const timeHours   = parseInt(document.getElementById('timeWindowInput').value, 10);
-  const cutoffMs    = timeHours > 0 ? Date.now() - timeHours * 3_600_000 : 0;
-
-  let articles = getAllArticlesForTrending();
-  if (cutoffMs > 0) articles = articles.filter(a => a.ts >= cutoffMs || a.ts === 0);
-
-  const clusters  = clusterArticles(articles, minWords);
-  const freq      = getGlobalWordFreq(articles);
-  const topWords  = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 40);
-  const maxFreq   = topWords[0]?.[1] || 1;
-
-  // Stats
-  const covBySource = {};
-  articles.forEach(a => { covBySource[a.source] = (covBySource[a.source] || 0) + 1; });
-  document.getElementById('hTrend').textContent = clusters.length;
-
-  document.getElementById('trendStats').innerHTML = `
-    <div class="trend-stat"><div class="trend-stat-val">${articles.length}</div><div class="trend-stat-lbl">articles analysed</div></div>
-    <div class="trend-stat"><div class="trend-stat-val">${clusters.length}</div><div class="trend-stat-lbl">trending stories</div></div>
-    <div class="trend-stat"><div class="trend-stat-val">${clusters[0] ? clusters[0].articles.length : 0}</div><div class="trend-stat-lbl">top story coverage</div></div>
-  `;
-
-  // Word cloud
-  if (topWords.length) {
-    const wc = document.getElementById('wordcloudPanel');
-    const words = topWords.map(([w, f]) => {
-      const ratio = f / maxFreq;
-      const size  = Math.round(11 + ratio * 18);
-      let tier    = 'tier-4';
-      if (ratio > 0.7) tier = 'tier-1';
-      else if (ratio > 0.45) tier = 'tier-2';
-      else if (ratio > 0.25) tier = 'tier-3';
-      return `<span class="wc-word ${tier}" style="font-size:${size}px" title="${f} mentions">${w}</span>`;
-    }).join('');
-    wc.innerHTML = `<div class="wordcloud-panel">
-      <div class="wc-header">
-        <span class="wc-title">Live keyword cloud</span>
-        <span class="wc-live-dot"><span class="wc-live-pulse"></span> updating live</span>
-      </div>
-      <div class="wc-words">${words}</div>
-    </div>`;
-  } else {
-    document.getElementById('wordcloudPanel').innerHTML = '';
-  }
-
-  // Sidebar keywords
-  const sbKw = document.getElementById('sbKeywords');
-  sbKw.innerHTML = topWords.slice(0, 12).map(([w, f]) =>
-    `<div style="display:flex;justify-content:space-between;padding:4px 10px;font-size:11px">
-      <span style="color:var(--text2)">${w}</span>
-      <span style="font-family:var(--mono);font-size:10px;color:var(--text3)">${f}</span>
-    </div>`
-  ).join('');
-
-  // Sidebar coverage
-  const sbCov = document.getElementById('sbCoverage');
-  const sortedSrc = Object.entries(covBySource).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  sbCov.innerHTML = sortedSrc.map(([name, cnt]) =>
-    `<div class="src-item">
-      <div class="src-color" style="background:${srcColor(name)}"></div>
-      <div class="src-info"><div class="src-name">${name}</div><div class="src-cnt">${cnt} articles</div></div>
-    </div>`
-  ).join('');
-
-  // Story cards
-  const container = document.getElementById('trendingContent');
-  if (!clusters.length) {
-    container.innerHTML = `<div class="trend-empty">
-      No trending stories found yet.<br>
-      <small>Try refreshing RSS / Telegram or relaxing the time window.</small>
-    </div>`;
-    return;
-  }
-
-  const rankInfo = [
-    { badgeCls:'rank-gold',   fillCls:'fill-gold',   label:'#1' },
-    { badgeCls:'rank-silver', fillCls:'fill-silver',  label:'#2' },
-    { badgeCls:'rank-bronze', fillCls:'fill-bronze',  label:'#3' },
-  ];
-  const maxCoverage = clusters[0].articles.length;
-
-  container.innerHTML = clusters.map((cluster, ri) => {
-    const info = rankInfo[ri];
-    const sorted = [...cluster.articles].sort((a, b) => (a.ts || 0) - (b.ts || 0));
-    const first  = sorted[0];
-    const sources = [...new Set(cluster.articles.map(a => a.source))];
-    const matched = [...cluster.matchedWords].slice(0, 8);
-    const pct = Math.round((cluster.articles.length / maxCoverage) * 100);
-
-    const timelineHTML = sorted.map((a, i) => {
-      const dt = a.ts ? new Date(a.ts) : null;
-      const timeStr = dt ? dt.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' · ' + dt.toLocaleDateString([], {month:'short',day:'numeric'}) : 'unknown time';
-      return `<div class="tl-event ${i === 0 ? 'first-cover' : ''}">
-        <div class="tl-event-header">
-          <span class="tl-src">${escHtml(a.source)}</span>
-          <span class="tl-time">${timeStr}</span>
-          ${i === 0 ? '<span class="first-badge">BROKE FIRST</span>' : ''}
-        </div>
-        <div class="tl-title"><a href="${escHtml(a.url)}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">${escHtml(a.title)}</a></div>
-      </div>`;
-    }).join('');
-
-    const pillsHTML = sources.map(s =>
-      `<span class="src-pill"><span class="src-pill-dot" style="background:${srcColor(s)}"></span>${escHtml(s)}</span>`
-    ).join('');
-
-    const kwHTML = matched.map((kw, i) => {
-      let cls = 'match-cool';
-      if (i < 2) cls = 'match-hot';
-      else if (i < 4) cls = 'match-warm';
-      return `<span class="kw-pill ${cls}">${escHtml(kw)}</span>`;
-    }).join('');
-
-    return `<div class="story-card" style="animation-delay:${ri * 0.1}s">
-      <div class="story-rank-bar">
-        <div class="story-rank-badge ${info.badgeCls}">${info.label}</div>
-        <div class="story-headline">${escHtml(first.title)}</div>
-        <div class="story-count-pill">✓ ${cluster.articles.length} sources</div>
-      </div>
-      <div class="story-coverage-bar"><div class="story-coverage-fill ${info.fillCls}" style="width:${pct}%"></div></div>
-      <div class="story-body">
-        <div>
-          <div class="story-timeline">
-            <div class="story-tl-title">Coverage timeline — first to last</div>
-            ${timelineHTML}
-          </div>
-        </div>
-        <div class="story-right">
-          <div class="story-sources-section">
-            <div class="sources-title">Covered by</div>
-            <div class="sources-pills">${pillsHTML}</div>
-          </div>
-          ${matched.length ? `<div class="matched-kw-section">
-            <div class="kw-title">Matched keywords</div>
-            <div class="kw-pills">${kwHTML}</div>
-          </div>` : ''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── TAB SWITCH ────────────────────────────────────────────────────────────────
-function switchTab(tab) {
-  curTab = tab;
-  document.getElementById('feedsPane').style.display    = tab === 'feeds'    ? 'flex' : 'none';
-  document.getElementById('trendingPane').style.display = tab === 'trending' ? 'flex' : 'none';
-  document.getElementById('tab-feeds').classList.toggle('active', tab === 'feeds');
-  document.getElementById('tab-trending').classList.toggle('active', tab === 'trending');
-  if (tab === 'trending') renderTrending();
-}
-
-// ── CONFIG ────────────────────────────────────────────────────────────────────
-function getApiUrl()     { return localStorage.getItem('cd_api_url') || ''; }
-function saveApiUrl(u)   { localStorage.setItem('cd_api_url', u.trim()); }
-function getInterval()   { return parseInt(localStorage.getItem('cd_interval') || '5', 10); }
-function saveInterval(v) { localStorage.setItem('cd_interval', String(v)); }
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function cleanText(raw) {
   if (!raw) return '';
   return raw
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/https?:\/\/[^\s]+/g, '')
-    .replace(/\bSHEETS\d+\b/gi, '')
-    .replace(/[↻→←]/g, '')
-    .replace(/\s{2,}/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g,'$1')
+    .replace(/https?:\/\/[^\s]+/g,'')
+    .replace(/\bSHEETS\d+\b/gi,'')
+    .replace(/[↻→←]/g,'')
+    .replace(/\s{2,}/g,' ')
     .trim();
 }
 
@@ -695,20 +520,162 @@ function isGarbage(text) {
   return false;
 }
 
-// ── RSS FETCH ─────────────────────────────────────────────────────────────────
-async function loadFromAPI() {
-  const apiUrl = getApiUrl();
-  if (!apiUrl) {
-    setBanner('error','⚙ No API URL set. Click <a onclick="openConfig()">⚙ Config</a> to add your Apps Script Web App URL.');
-    return;
+function fmtTime(tsOrIso) {
+  if (!tsOrIso) return '';
+  const date = typeof tsOrIso==='number' ? new Date(tsOrIso) : new Date(tsOrIso);
+  if (isNaN(date)) return '';
+  const diff = (Date.now()-date)/1000;
+  if (diff<60)    return Math.floor(diff)+'s ago';
+  if (diff<3600)  return Math.floor(diff/60)+'m ago';
+  if (diff<86400) return date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  return date.toLocaleDateString([],{month:'short',day:'numeric'});
+}
+
+function srcColor(name) { return (ALL_SOURCES_META[name]||{}).color || '#888'; }
+function srcMeta(name)  { return SOURCE_META[name]||{color:'#666',domain:''}; }
+function getInterval()  { return parseInt(localStorage.getItem('cd_interval')||'5',10); }
+function saveInterval(v){ localStorage.setItem('cd_interval',String(v)); }
+
+function updateLastUpdatedLabel() {
+  const times=[
+    ...(lastFetchedAt?[lastFetchedAt.getTime()]:[]),
+    ...Object.values(tgUpdatedAt).filter(Boolean),
+    ...Object.values(directUpdatedAt).filter(Boolean),
+  ];
+  const label=document.getElementById('lastUpdatedLabel');
+  if(times.length) label.textContent=new Date(Math.max(...times)).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const anyLive=apiOnline||Object.values(tgLive).some(Boolean)||Object.values(directLive).some(Boolean);
+  document.getElementById('liveBadgeWrap').innerHTML=anyLive?'<span class="live-badge"><span class="live-dot"></span>Live</span>':'';
+}
+
+function setBanner(type, html){ const el=document.getElementById('apiBanner'); el.className=`api-banner ${type}`; el.innerHTML=html; }
+
+// ── TECHFLOW RSS PARSER ───────────────────────────────────────────────────────
+function parseTechFlowRSS(xml) {
+  try {
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const items = doc.querySelectorAll('item');
+    const results = [];
+    items.forEach(item => {
+      const title = item.querySelector('title')?.textContent?.trim() || '';
+      const link  = item.querySelector('link')?.textContent?.trim() || '';
+      const pubDateStr = item.querySelector('pubDate')?.textContent?.trim() || '';
+      const ts = pubDateStr ? new Date(pubDateStr).getTime() : 0;
+      const clean = cleanText(title.replace(/<!\[CDATA\[|\]\]>/g,'').trim());
+      if (!clean || isGarbage(clean)) return;
+      results.push({ title: clean, url: link || '#', ts, pubDate: pubDateStr });
+    });
+    return results;
+  } catch(e) {
+    console.error('[TechFlow RSS parse]', e);
+    return [];
   }
+}
+
+// ── CHAINCATCHER API PARSER ───────────────────────────────────────────────────
+function parseChainCatcher(json) {
+  try {
+    const data = typeof json === 'string' ? JSON.parse(json) : json;
+    // Support both direct array and nested data.list
+    const items = Array.isArray(data) ? data
+      : Array.isArray(data?.data) ? data.data
+      : Array.isArray(data?.data?.list) ? data.data.list
+      : Array.isArray(data?.list) ? data.list
+      : [];
+    return items.map(item => {
+      const title = cleanText(item.title || item.name || '');
+      const url   = item.url || item.link || '#';
+      const ts    = item.publishTime ? new Date(item.publishTime).getTime()
+                  : item.created_at  ? new Date(item.created_at).getTime()
+                  : item.publish_time ? item.publish_time * 1000 : 0;
+      return { title, url, ts };
+    }).filter(a => a.title && !isGarbage(a.title));
+  } catch(e) {
+    console.error('[ChainCatcher parse]', e);
+    return [];
+  }
+}
+
+// ── FETCH DIRECT FEED ─────────────────────────────────────────────────────────
+async function fetchDirectFeed(feed) {
+  if (directFetching.has(feed.id)) return;
+  directFetching.add(feed.id);
+  setDirectCardLoading(feed.id, true);
+
+  try {
+    let articles = [];
+
+    if (feed.type === 'json_api') {
+      // ChainCatcher: try direct fetch first (CORS may work), then proxy
+      let raw = null;
+      try {
+        const r = await fetch(feed.url, { signal: AbortSignal.timeout(12000) });
+        if (r.ok) raw = await r.json();
+      } catch(_) {}
+
+      if (!raw) {
+        const text = await fetchWithProxy(feed.url);
+        if (text) {
+          try { raw = JSON.parse(text); } catch(_) { raw = null; }
+        }
+      }
+      if (raw) articles = parseChainCatcher(raw);
+
+    } else if (feed.type === 'rss_proxy') {
+      // TechFlow RSS: needs proxy (CORS blocked)
+      const text = await fetchWithProxy(feed.url);
+      if (text) articles = parseTechFlowRSS(text);
+    }
+
+    if (articles.length > 0) {
+      const existing    = directByFeed[feed.id] || [];
+      const existingUrls= new Set(existing.map(a=>a.url));
+      const merged = [...articles.filter(a=>!existingUrls.has(a.url)), ...existing];
+      merged.sort((a,b)=>(b.ts||0)-(a.ts||0));
+      directByFeed[feed.id]    = merged.slice(0, 100);
+      directUpdatedAt[feed.id] = Date.now();
+      directLive[feed.id]      = true;
+    } else {
+      if (!directByFeed[feed.id]) directByFeed[feed.id] = [];
+    }
+  } catch(e) {
+    console.error('[DirectFeed]', feed.id, e);
+    if (!directByFeed[feed.id]) directByFeed[feed.id] = [];
+  }
+
+  directFetching.delete(feed.id);
+  setDirectCardLoading(feed.id, false);
+  updateLastUpdatedLabel();
+  renderAll();
+  if (curTab === 'trending') renderTrending();
+}
+
+function setDirectCardLoading(id, on) {
+  const card = document.getElementById('card-'+id);
+  if (card) card.classList.toggle('loading', on);
+  const pill = document.getElementById('pill-'+id);
+  if (pill) {
+    const feed = DIRECT_FEEDS.find(f=>f.id===id);
+    if (on) { pill.className='pill-type pill-loading'; pill.textContent='FETCHING'; }
+    else {
+      const lv = directLive[id];
+      pill.className = `pill-type ${feed.pillClass}${lv?' pill-live':''}`;
+      pill.textContent = lv ? 'LIVE' : feed.badge.toUpperCase();
+    }
+  }
+  const btn = document.getElementById('rfbtn-'+id);
+  if (btn) { btn.disabled=on; btn.textContent=on?'⟳ …':'↻ Refresh'; }
+}
+
+// ── RSS FETCH (Google Sheets) ─────────────────────────────────────────────────
+async function loadFromAPI() {
   if (isFetchingRSS) return;
   isFetchingRSS = true;
   const btn = document.getElementById('refreshAllBtn');
   btn.disabled = true; btn.textContent = '↻ Fetching…';
   setBanner('loading','⟳ Fetching from Google Sheets API…');
   try {
-    const res  = await fetch(`${apiUrl}?limit=500`, { signal: AbortSignal.timeout(20000) });
+    const res  = await fetch(`${APPS_SCRIPT_URL}?limit=500`, { signal: AbortSignal.timeout(20000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     if (json.status !== 'ok') throw new Error(json.message || 'API error');
@@ -721,7 +688,7 @@ async function loadFromAPI() {
     if (curTab === 'trending') renderTrending();
   } catch (err) {
     apiOnline = false;
-    setBanner('error', `✗ ${err.message} — <a onclick="openConfig()">Check URL</a> or retry.`);
+    setBanner('error', `✗ Sheets: ${err.message}. Showing other feeds.`);
     if (allArticles.length) renderAll();
   } finally {
     isFetchingRSS = false;
@@ -730,15 +697,7 @@ async function loadFromAPI() {
 }
 
 // ── TELEGRAM FETCH ────────────────────────────────────────────────────────────
-function makeTgProxies(url) {
-  const enc = encodeURIComponent(url);
-  return [
-    async () => { const r=await fetch(`https://api.allorigins.win/get?url=${enc}`,{signal:AbortSignal.timeout(10000)}); if(!r.ok) throw new Error('allorigins '+r.status); const j=await r.json(); if(!j.contents||j.contents.length<500) throw new Error('allorigins empty'); return j.contents; },
-    async () => { const r=await fetch(`https://corsproxy.io/?${enc}`,{signal:AbortSignal.timeout(10000)}); if(!r.ok) throw new Error('corsproxy '+r.status); const t=await r.text(); if(t.length<500) throw new Error('corsproxy empty'); return t; },
-    async () => { const r=await fetch(`https://thingproxy.freeboard.io/fetch/${url}`,{signal:AbortSignal.timeout(10000)}); if(!r.ok) throw new Error('thingproxy '+r.status); const t=await r.text(); if(t.length<500) throw new Error('thingproxy empty'); return t; },
-    async () => { const r=await fetch(`https://api.codetabs.com/v1/proxy?quest=${enc}`,{signal:AbortSignal.timeout(10000)}); if(!r.ok) throw new Error('codetabs '+r.status); const t=await r.text(); if(t.length<500) throw new Error('codetabs empty'); return t; },
-  ];
-}
+function makeTgProxies(url) { return makeProxies(url); }
 
 function parseTelegramPage(html, src) {
   const doc  = new DOMParser().parseFromString(html,'text/html');
@@ -814,7 +773,11 @@ function setTgCardLoading(id, on) {
 }
 
 async function refreshAll() {
-  await Promise.allSettled([loadFromAPI(), ...TG_SOURCES.map(s=>fetchTelegram(s))]);
+  await Promise.allSettled([
+    loadFromAPI(),
+    ...DIRECT_FEEDS.map(f=>fetchDirectFeed(f)),
+    ...TG_SOURCES.map(s=>fetchTelegram(s))
+  ]);
 }
 
 function toggleAuto() {
@@ -824,41 +787,25 @@ function toggleAuto() {
   else { b.textContent='Auto ▸ Off'; b.classList.remove('on'); clearInterval(autoHandle); }
 }
 
-function setBanner(type, html) { const el=document.getElementById('apiBanner'); el.className=`api-banner ${type}`; el.innerHTML=html; }
-
-function openConfig() { document.getElementById('apiUrlInput').value=getApiUrl(); document.getElementById('intervalInput').value=String(getInterval()); document.getElementById('configModal').classList.add('open'); }
+function openConfig()  { document.getElementById('intervalInput').value=String(getInterval()); document.getElementById('configModal').classList.add('open'); }
 function closeConfig() { document.getElementById('configModal').classList.remove('open'); }
-function saveConfig() {
-  const url=document.getElementById('apiUrlInput').value.trim();
+function saveConfig()  {
   const iv=parseInt(document.getElementById('intervalInput').value,10);
-  if(!url){const inp=document.getElementById('apiUrlInput');inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),400);return;}
-  saveApiUrl(url); saveInterval(iv);
+  saveInterval(iv);
   if(autoOn){clearInterval(autoHandle);autoHandle=setInterval(refreshAll,iv*60000);}
-  closeConfig(); loadFromAPI();
+  closeConfig();
 }
 
-function fmtTime(tsOrIso) {
-  if (!tsOrIso) return '';
-  const date = typeof tsOrIso==='number' ? new Date(tsOrIso) : new Date(tsOrIso);
-  if (isNaN(date)) return '';
-  const diff = (Date.now()-date)/1000;
-  if (diff<60)    return Math.floor(diff)+'s ago';
-  if (diff<3600)  return Math.floor(diff/60)+'m ago';
-  if (diff<86400) return date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  return date.toLocaleDateString([],{month:'short',day:'numeric'});
+function switchTab(tab) {
+  curTab = tab;
+  document.getElementById('feedsPane').style.display    = tab==='feeds'    ? 'flex' : 'none';
+  document.getElementById('trendingPane').style.display = tab==='trending' ? 'flex' : 'none';
+  document.getElementById('tab-feeds').classList.toggle('active',    tab==='feeds');
+  document.getElementById('tab-trending').classList.toggle('active', tab==='trending');
+  if (tab==='trending') renderTrending();
 }
 
-function updateLastUpdatedLabel() {
-  const times=[...(lastFetchedAt?[lastFetchedAt.getTime()]:[]),...Object.values(tgUpdatedAt).filter(Boolean)];
-  const label=document.getElementById('lastUpdatedLabel');
-  if(times.length) label.textContent=new Date(Math.max(...times)).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  const anyLive=apiOnline||Object.values(tgLive).some(Boolean);
-  document.getElementById('liveBadgeWrap').innerHTML=anyLive?'<span class="live-badge"><span class="live-dot"></span>Live</span>':'';
-}
-
-function srcMeta(name) { return SOURCE_META[name]||{color:'#666',domain:''}; }
-
-// ── RENDER FEEDS ──────────────────────────────────────────────────────────────
+// ── RENDER ALL FEEDS ──────────────────────────────────────────────────────────
 function renderAll() {
   const search       = document.getElementById('searchInput').value.toLowerCase().trim();
   const sort         = document.getElementById('sortSel').value;
@@ -875,7 +822,8 @@ function renderAll() {
     if(a.pubDate>oneHourAgoISO) totNew++;
     if(ALERT_KW.some(k=>a.title.toLowerCase().includes(k))) totAlert++;
   });
-  TG_SOURCES.forEach(s=>{totTg+=(tgBySource[s.id]||[]).length;});
+  DIRECT_FEEDS.forEach(f => { totAll += (directByFeed[f.id]||[]).length; });
+  TG_SOURCES.forEach(s => { totTg += (tgBySource[s.id]||[]).length; });
 
   function filterRSS(arr) {
     let a=arr.slice();
@@ -885,6 +833,13 @@ function renderAll() {
     if(curTopic==='hacks')  a=a.filter(x=>HACK_KW.some(k=>x.title.toLowerCase().includes(k)));
     if(curTopic==='funding')a=a.filter(x=>FUND_KW.some(k=>x.title.toLowerCase().includes(k)));
     return sort==='oldest'?a.sort((x,y)=>x.pubDate<y.pubDate?-1:1):a.sort((x,y)=>x.pubDate>y.pubDate?-1:1);
+  }
+  function filterDirect(arr) {
+    let a=arr.slice();
+    if(search)              a=a.filter(x=>x.title.toLowerCase().includes(search));
+    if(curTopic==='hacks')  a=a.filter(x=>HACK_KW.some(k=>x.title.toLowerCase().includes(k)));
+    if(curTopic==='funding')a=a.filter(x=>FUND_KW.some(k=>x.title.toLowerCase().includes(k)));
+    return sort==='oldest'?a.sort((x,y)=>x.ts-y.ts):a.sort((x,y)=>y.ts-x.ts);
   }
   function filterTG(arr) {
     let a=arr.slice();
@@ -896,11 +851,13 @@ function renderAll() {
 
   const main  = document.getElementById('mainContent');
   const frag  = document.createDocumentFragment();
-  const gridCls='feeds-grid'+(curView==='list'?' list-view':'');
-  const tgCls  ='tg-grid'+(curView==='list'?' list-view':'');
+  const gridCls= 'feeds-grid'+(curView==='list'?' list-view':'');
+  const dirCls = 'direct-grid'+(curView==='list'?' list-view':'');
+  const tgCls  = 'tg-grid'+(curView==='list'?' list-view':'');
   const showRSS= curFilter!=='tg';
   const showTG = curFilter!=='new'&&curFilter!=='alert';
 
+  // ── Google Sheets RSS section
   if (showRSS) {
     const sh=document.createElement('div'); sh.className='section-header';
     sh.innerHTML='<span class="section-title">RSS Feeds</span><span class="section-badge sheets">GOOGLE SHEETS</span>';
@@ -911,6 +868,25 @@ function renderAll() {
     frag.appendChild(grid);
   }
 
+  // ── Direct feeds section (TechFlow + ChainCatcher)
+  if (showRSS) {
+    const dh=document.createElement('div'); dh.className='section-header';
+    dh.innerHTML=`
+      <span class="section-title">Direct Feeds</span>
+      <span class="section-badge tf">TECHFLOW</span>
+      <span class="section-badge cc">CHAINCATCHER</span>`;
+    frag.appendChild(dh);
+    const notice=document.createElement('div'); notice.className='tg-notice';
+    notice.innerHTML=`<b>ℹ Direct feeds</b> — TechFlow RSS &amp; ChainCatcher JSON API fetched via proxy. Articles are merged and de-duplicated on each refresh.`;
+    frag.appendChild(notice);
+    const dGrid=document.createElement('div'); dGrid.className=dirCls;
+    DIRECT_FEEDS.forEach((feed,fi)=>{
+      dGrid.appendChild(buildDirectCard_(feed, filterDirect(directByFeed[feed.id]||[]), rssSources.length+fi));
+    });
+    frag.appendChild(dGrid);
+  }
+
+  // ── Telegram section
   if (showTG) {
     const th=document.createElement('div'); th.className='section-header';
     th.innerHTML='<span style="color:var(--tg);font-size:14px">✈</span><span class="section-title">Telegram Channels</span><span class="section-badge tg">LIVE</span>';
@@ -919,7 +895,7 @@ function renderAll() {
     notice.innerHTML=`<b>ℹ Telegram feeds</b> — scraped from public channel web previews via parallel proxy racing. New posts merge with existing ones.`;
     frag.appendChild(notice);
     const tgGrid=document.createElement('div'); tgGrid.className=tgCls;
-    TG_SOURCES.forEach((src,si)=>tgGrid.appendChild(buildTGCard_(src,filterTG(tgBySource[src.id]||[]),rssSources.length+si)));
+    TG_SOURCES.forEach((src,si)=>tgGrid.appendChild(buildTGCard_(src,filterTG(tgBySource[src.id]||[]),rssSources.length+DIRECT_FEEDS.length+si)));
     frag.appendChild(tgGrid);
   }
 
@@ -935,12 +911,14 @@ function renderAll() {
   document.getElementById('fc-alert').textContent= totAlert;
   document.getElementById('fc-tg').textContent   = totTg;
 
+  // sidebar topics
   const sbTopics=document.getElementById('sbTopics'); sbTopics.innerHTML='';
   [{label:'🔴 Hacks',key:'hacks'},{label:'💰 Funding',key:'funding'}].forEach(t=>{
     const el=document.createElement('div'); el.className='topic-item'+(curTopic===t.key?' active':'');
     el.textContent=t.label; el.addEventListener('click',()=>setTopic(t.key,el)); sbTopics.appendChild(el);
   });
 
+  // sidebar RSS sources
   const sbSrc=document.getElementById('sbSources'); sbSrc.innerHTML='';
   rssSources.forEach((name,si)=>{
     const meta=srcMeta(name); const count=(bySource[name]||[]).length;
@@ -950,6 +928,17 @@ function renderAll() {
     sbSrc.appendChild(item);
   });
 
+  // sidebar direct feeds
+  const sbDir=document.getElementById('sbDirectSources'); sbDir.innerHTML='';
+  DIRECT_FEEDS.forEach((feed,fi)=>{
+    const count=(directByFeed[feed.id]||[]).length; const live=!!directLive[feed.id];
+    const item=document.createElement('div'); item.className='src-item';
+    item.innerHTML=`<div class="src-color" style="background:${feed.color}"></div><div class="src-info"><div class="src-name">${feed.emoji} ${feed.name}</div><div class="src-cnt">${count?count+' articles':'loading…'}</div></div><div class="src-dot" style="background:${live?feed.color:directFetching.has(feed.id)?'var(--gold)':'var(--border2)'}"></div>`;
+    item.addEventListener('click',()=>{const c=document.querySelectorAll('.direct-grid .feed-card');if(c[fi])c[fi].scrollIntoView({behavior:'smooth',block:'start'});});
+    sbDir.appendChild(item);
+  });
+
+  // sidebar TG sources
   const sbTg=document.getElementById('sbTgSources'); sbTg.innerHTML='';
   TG_SOURCES.forEach((src,si)=>{
     const count=(tgBySource[src.id]||[]).length; const live=!!tgLive[src.id];
@@ -960,7 +949,7 @@ function renderAll() {
   });
 }
 
-// ── BUILD RSS CARD ────────────────────────────────────────────────────────────
+// ── BUILD RSS CARD (Google Sheets) ────────────────────────────────────────────
 function buildRSSCard_(srcName, items, idx) {
   const meta = srcMeta(srcName);
   const oneHourAgoISO = new Date(Date.now()-3_600_000).toISOString();
@@ -990,11 +979,9 @@ function buildRSSCard_(srcName, items, idx) {
       a.href=item.link; a.target='_blank'; a.rel='noopener noreferrer';
       const title=document.createElement('div'); title.className='ni-title'; title.textContent=rawTitle;
       const time=document.createElement('div'); time.className='ni-time'; time.textContent=fmtTime(item.pubDate);
-      a.append(title, time); list.appendChild(a);
+      a.append(title,time); list.appendChild(a);
     });
-    if (!list.children.length) {
-      const emp=document.createElement('div'); emp.className='feed-empty'; emp.textContent='No valid headlines available.'; list.appendChild(emp);
-    }
+    if(!list.children.length){const emp=document.createElement('div');emp.className='feed-empty';emp.textContent='No valid headlines.';list.appendChild(emp);}
   }
   card.appendChild(list);
   const foot=document.createElement('div'); foot.className='card-foot';
@@ -1004,6 +991,68 @@ function buildRSSCard_(srcName, items, idx) {
   const rfBtn=document.createElement('button'); rfBtn.className='card-action-btn blue';
   rfBtn.textContent='↻ Refresh'; rfBtn.addEventListener('click',loadFromAPI);
   btns.append(rfBtn); foot.append(upd,btns); card.appendChild(foot);
+  return card;
+}
+
+// ── BUILD DIRECT FEED CARD (TechFlow / ChainCatcher) ─────────────────────────
+function buildDirectCard_(feed, items, idx) {
+  const isFetching = directFetching.has(feed.id);
+  const isLive     = !!directLive[feed.id];
+  const oneHourAgo = Date.now()-3_600_000;
+
+  const card=document.createElement('div');
+  card.className=`feed-card ${feed.cardClass}${isFetching?' loading':''}`;
+  card.id='card-'+feed.id; card.style.animationDelay=(idx*0.06)+'s';
+
+  const head=document.createElement('div'); head.className='card-head';
+  const cb=document.createElement('div'); cb.className='card-color'; cb.style.background=feed.color;
+  const fav=document.createElement('img'); fav.className='card-favicon';
+  fav.src=`https://www.google.com/s2/favicons?domain=${feed.domain}&sz=32`; fav.alt='';
+  fav.onerror=function(){this.style.display='none';};
+  const nm=document.createElement('span'); nm.className='card-name'; nm.textContent=feed.name;
+  const mt=document.createElement('div'); mt.className='card-meta';
+  const pill=document.createElement('span'); pill.id='pill-'+feed.id;
+  if(isFetching){pill.className='pill-type pill-loading';pill.textContent='FETCHING';}
+  else{pill.className=`pill-type ${feed.pillClass}${isLive?' pill-live':''}`;pill.textContent=isLive?'LIVE':feed.badge.toUpperCase();}
+  const cnt=document.createElement('span'); cnt.className='card-cnt'; cnt.textContent=items.length;
+  mt.append(pill,cnt); head.append(cb,fav,nm,mt); card.appendChild(head);
+
+  const infoBar=document.createElement('div'); infoBar.className=`tg-info-bar ${feed.infoColor}`;
+  infoBar.style.color='inherit';
+  infoBar.innerHTML=`${feed.emoji} <a href="https://${feed.domain}" target="_blank" rel="noopener" style="color:inherit">${feed.desc}</a>`;
+  card.appendChild(infoBar);
+
+  const list=document.createElement('div'); list.className='news-list-inner';
+  if(!items.length){
+    const emp=document.createElement('div'); emp.className='feed-empty';
+    emp.innerHTML=isFetching?'⟳ Fetching via proxy…':`Loading…<br><small style="font-size:9px">If slow, check proxy availability</small>`;
+    list.appendChild(emp);
+  } else {
+    items.forEach(item => {
+      const isNew=item.ts>oneHourAgo;
+      const a=document.createElement('a');
+      a.className=`news-item ${feed.infoColor}-msg${isNew?' is-new':''}`;
+      a.href=item.url; a.target='_blank'; a.rel='noopener noreferrer';
+      const title=document.createElement('div'); title.className='ni-title'; title.textContent=item.title;
+      const time=document.createElement('div'); time.className='ni-time'; time.textContent=fmtTime(item.ts);
+      a.append(title,time); list.appendChild(a);
+    });
+  }
+  card.appendChild(list);
+
+  const foot=document.createElement('div'); foot.className='card-foot';
+  const upd=document.createElement('span'); upd.className='card-updated';
+  upd.textContent=directUpdatedAt[feed.id]?'Updated '+fmtTime(directUpdatedAt[feed.id]):'Fetching…';
+  const btns=document.createElement('div'); btns.className='card-foot-btns';
+  const rfBtn=document.createElement('button');
+  rfBtn.className=`card-action-btn ${feed.actionClass}`;
+  rfBtn.id='rfbtn-'+feed.id; rfBtn.textContent=isFetching?'⟳ …':'↻ Refresh'; rfBtn.disabled=isFetching;
+  rfBtn.addEventListener('click',()=>fetchDirectFeed(feed));
+  const extLink=document.createElement('a');
+  extLink.className=`card-action-btn ${feed.actionClass}`;
+  extLink.href=`https://${feed.domain}`; extLink.target='_blank'; extLink.rel='noopener';
+  extLink.textContent='↗ Site'; extLink.style.textDecoration='underline';
+  btns.append(rfBtn,extLink); foot.append(upd,btns); card.appendChild(foot);
   return card;
 }
 
@@ -1027,8 +1076,8 @@ function buildTGCard_(src, items, idx) {
   else{pill.className='pill-type pill-tg'+(isLive?' pill-live':'');pill.textContent=isLive?'LIVE':'TG';}
   const cnt=document.createElement('span'); cnt.className='card-cnt'; cnt.textContent=items.length;
   mt.append(pill,cnt); head.append(cb,tgIcon,nm,mt); card.appendChild(head);
-  const infoBar=document.createElement('div'); infoBar.className='tg-info-bar';
-  infoBar.innerHTML=`✈ <a href="https://t.me/${src.handle}" target="_blank" rel="noopener">@${src.handle}</a> · open in Telegram`;
+  const infoBar=document.createElement('div'); infoBar.className='tg-info-bar tg';
+  infoBar.innerHTML=`✈ <a href="https://t.me/${src.handle}" target="_blank" rel="noopener" style="color:var(--tg)">@${src.handle}</a> · open in Telegram`;
   card.appendChild(infoBar);
   const list=document.createElement('div'); list.className='news-list-inner';
   if (!items.length) {
@@ -1058,8 +1107,11 @@ function buildTGCard_(src, items, idx) {
   rfBtn.addEventListener('click',()=>fetchTelegram(src));
   const extLink=document.createElement('a'); extLink.className='card-action-btn tgbtn';
   extLink.href=`https://t.me/${src.handle}`; extLink.target='_blank'; extLink.rel='noopener';
-  extLink.textContent='✈ Open'; extLink.style.textDecoration='underline';
-  btns.append(rfBtn,extLink); foot.append(upd,btns); card.appendChild(foot);
+  extLink.textContent='✈ Web'; extLink.style.textDecoration='underline';
+  const appLink=document.createElement('a'); appLink.className='card-action-btn tgbtn';
+  appLink.href=`tg://resolve?domain=${src.handle}`;
+  appLink.textContent='📲 App'; appLink.style.textDecoration='underline';
+  btns.append(rfBtn,extLink,appLink); foot.append(upd,btns); card.appendChild(foot);
   return card;
 }
 
@@ -1082,6 +1134,100 @@ function buildSkeletonCard_(idx) {
   return card;
 }
 
+// ── TRENDING ENGINE ───────────────────────────────────────────────────────────
+function normalizeTitle(title) {
+  return title.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(w=>w.length>3&&!STOP_WORDS.has(w)).join(' ');
+}
+function getTitleWords(title){ return normalizeTitle(title).split(/\s+/).filter(Boolean); }
+function countSharedWords(titleA,titleB){const wa=new Set(getTitleWords(titleA));const wb=getTitleWords(titleB);return wb.filter(w=>wa.has(w));}
+function getGlobalWordFreq(articles){const freq={};articles.forEach(a=>{getTitleWords(a.title||'').forEach(w=>{freq[w]=(freq[w]||0)+1;});});return freq;}
+
+function getAllArticlesForTrending() {
+  const rss = allArticles.map(a=>({title:a.title||'',source:a.source||'Unknown',ts:a.pubDate?new Date(a.pubDate).getTime():0,url:a.link||'#',type:'rss'}));
+  const direct = [];
+  DIRECT_FEEDS.forEach(feed=>{
+    (directByFeed[feed.id]||[]).forEach(item=>{
+      direct.push({title:item.title||'',source:feed.name,ts:item.ts||0,url:item.url||'#',type:feed.id});
+    });
+  });
+  const tg = [];
+  TG_SOURCES.forEach(src=>{(tgBySource[src.id]||[]).forEach(msg=>{tg.push({title:msg.title||'',source:src.name,ts:msg.ts||0,url:msg.url||'#',type:'tg'});});});
+  return [...rss,...direct,...tg];
+}
+
+function clusterArticles(articles,minWords){
+  const used=new Array(articles.length).fill(false);
+  const clusters=[];
+  for(let i=0;i<articles.length;i++){
+    if(used[i]) continue;
+    const cluster={articles:[articles[i]],matchedWords:new Set()};
+    used[i]=true;
+    for(let j=i+1;j<articles.length;j++){
+      if(used[j]) continue;
+      const shared=countSharedWords(articles[i].title||'',articles[j].title||'');
+      if(shared.length>=minWords){cluster.articles.push(articles[j]);shared.forEach(w=>cluster.matchedWords.add(w));used[j]=true;}
+    }
+    if(cluster.articles.length>1) clusters.push(cluster);
+  }
+  clusters.sort((a,b)=>b.articles.length-a.articles.length);
+  return clusters.slice(0,3);
+}
+
+function renderTrending(){
+  const minWords  = parseInt(document.getElementById('minWordsInput').value,10);
+  const timeHours = parseInt(document.getElementById('timeWindowInput').value,10);
+  const cutoffMs  = timeHours>0 ? Date.now()-timeHours*3_600_000 : 0;
+  let articles = getAllArticlesForTrending();
+  if(cutoffMs>0) articles=articles.filter(a=>a.ts>=cutoffMs||a.ts===0);
+  const clusters = clusterArticles(articles,minWords);
+  const freq     = getGlobalWordFreq(articles);
+  const topWords = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,40);
+  const maxFreq  = topWords[0]?.[1]||1;
+  const covBySource={};
+  articles.forEach(a=>{covBySource[a.source]=(covBySource[a.source]||0)+1;});
+  document.getElementById('hTrend').textContent=clusters.length;
+  document.getElementById('trendStats').innerHTML=`
+    <div class="trend-stat"><div class="trend-stat-val">${articles.length}</div><div class="trend-stat-lbl">articles analysed</div></div>
+    <div class="trend-stat"><div class="trend-stat-val">${clusters.length}</div><div class="trend-stat-lbl">trending stories</div></div>
+    <div class="trend-stat"><div class="trend-stat-val">${clusters[0]?clusters[0].articles.length:0}</div><div class="trend-stat-lbl">top story coverage</div></div>`;
+
+  if(topWords.length){
+    const wc=document.getElementById('wordcloudPanel');
+    const words=topWords.map(([w,f])=>{
+      const ratio=f/maxFreq; const size=Math.round(11+ratio*18);
+      let tier='tier-4';if(ratio>.7)tier='tier-1';else if(ratio>.45)tier='tier-2';else if(ratio>.25)tier='tier-3';
+      return `<span class="wc-word ${tier}" style="font-size:${size}px" title="${f} mentions">${w}</span>`;
+    }).join('');
+    wc.innerHTML=`<div class="wordcloud-panel"><div class="wc-header"><span class="wc-title">Live keyword cloud</span><span class="wc-live-dot"><span class="wc-live-pulse"></span> updating live</span></div><div class="wc-words">${words}</div></div>`;
+  } else { document.getElementById('wordcloudPanel').innerHTML=''; }
+
+  document.getElementById('sbKeywords').innerHTML=topWords.slice(0,12).map(([w,f])=>`<div style="display:flex;justify-content:space-between;padding:4px 10px;font-size:11px"><span style="color:var(--text2)">${w}</span><span style="font-family:var(--mono);font-size:10px;color:var(--text3)">${f}</span></div>`).join('');
+  document.getElementById('sbCoverage').innerHTML=Object.entries(covBySource).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([name,cnt])=>`<div class="src-item"><div class="src-color" style="background:${srcColor(name)}"></div><div class="src-info"><div class="src-name">${name}</div><div class="src-cnt">${cnt} articles</div></div></div>`).join('');
+
+  const container=document.getElementById('trendingContent');
+  if(!clusters.length){container.innerHTML=`<div class="trend-empty">No trending stories found yet.<br><small>Try refreshing or relaxing the time window.</small></div>`;return;}
+
+  const rankInfo=[{badgeCls:'rank-gold',fillCls:'fill-gold',label:'#1'},{badgeCls:'rank-silver',fillCls:'fill-silver',label:'#2'},{badgeCls:'rank-bronze',fillCls:'fill-bronze',label:'#3'}];
+  const maxCoverage=clusters[0].articles.length;
+
+  container.innerHTML=clusters.map((cluster,ri)=>{
+    const info=rankInfo[ri];
+    const sorted=[...cluster.articles].sort((a,b)=>(a.ts||0)-(b.ts||0));
+    const first=sorted[0];
+    const sources=[...new Set(cluster.articles.map(a=>a.source))];
+    const matched=[...cluster.matchedWords].slice(0,8);
+    const pct=Math.round((cluster.articles.length/maxCoverage)*100);
+    const timelineHTML=sorted.map((a,i)=>{
+      const dt=a.ts?new Date(a.ts):null;
+      const timeStr=dt?dt.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' · '+dt.toLocaleDateString([],{month:'short',day:'numeric'}):'unknown time';
+      return `<div class="tl-event ${i===0?'first-cover':''}"><div class="tl-event-header"><span class="tl-src">${escHtml(a.source)}</span><span class="tl-time">${timeStr}</span>${i===0?'<span class="first-badge">BROKE FIRST</span>':''}</div><div class="tl-title"><a href="${escHtml(a.url)}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">${escHtml(a.title)}</a></div></div>`;
+    }).join('');
+    const pillsHTML=sources.map(s=>`<span class="src-pill"><span class="src-pill-dot" style="background:${srcColor(s)}"></span>${escHtml(s)}</span>`).join('');
+    const kwHTML=matched.map((kw,i)=>`<span class="kw-pill ${i<2?'match-hot':i<4?'match-warm':'match-cool'}">${escHtml(kw)}</span>`).join('');
+    return `<div class="story-card" style="animation-delay:${ri*.1}s"><div class="story-rank-bar"><div class="story-rank-badge ${info.badgeCls}">${info.label}</div><div class="story-headline">${escHtml(first.title)}</div><div class="story-count-pill">✓ ${cluster.articles.length} sources</div></div><div class="story-coverage-bar"><div class="story-coverage-fill ${info.fillCls}" style="width:${pct}%"></div></div><div class="story-body"><div><div class="story-timeline"><div class="story-tl-title">Coverage timeline — first to last</div>${timelineHTML}</div></div><div class="story-right"><div><div class="sources-title">Covered by</div><div class="sources-pills">${pillsHTML}</div></div>${matched.length?`<div><div class="kw-title">Matched keywords</div><div class="kw-pills">${kwHTML}</div></div>`:''}</div></div></div>`;
+  }).join('');
+}
+
 // ── CONTROLS ──────────────────────────────────────────────────────────────────
 function setFilter(f,btn){curFilter=f;curTopic=null;document.querySelectorAll('.filt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderAll();}
 function setView(v){curView=v;document.getElementById('vGrid').classList.toggle('active',v==='grid');document.getElementById('vList').classList.toggle('active',v==='list');renderAll();}
@@ -1089,9 +1235,9 @@ function setTopic(key,el){curTopic=curTopic===key?null:key;curFilter='all';docum
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderAll();
+DIRECT_FEEDS.forEach(f=>fetchDirectFeed(f));
 TG_SOURCES.forEach(s=>fetchTelegram(s));
-if(getApiUrl()){loadFromAPI();}
-else{setBanner('error','⚙ First-time setup: click <a onclick="openConfig()">⚙ Config</a> and paste your Apps Script Web App URL.');}
+loadFromAPI();
 </script>
 </body>
 </html>
