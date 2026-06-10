@@ -263,6 +263,30 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .trend-auto-notice{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 14px;margin-bottom:16px;line-height:1.6}
 
 @media(max-width:768px){.sidebar{display:none}.content,.trend-content{padding:14px}header{padding:0 14px;gap:10px}.hstats{display:none}}
+
+/* Alert toggle */
+.alert-toggle-wrap{position:relative;display:inline-flex;cursor:pointer}
+.alert-toggle-wrap input{position:absolute;opacity:0;width:0;height:0}
+.alert-toggle-track{width:32px;height:18px;background:var(--border2);border-radius:9px;transition:background .2s;position:relative;display:block}
+.alert-toggle-wrap input:checked + .alert-toggle-track{background:var(--green)}
+.alert-toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.alert-toggle-wrap input:checked + .alert-toggle-track .alert-toggle-thumb{transform:translateX(14px)}
+
+/* Alert log entries */
+.alert-log-item{font-family:var(--mono);font-size:9px;padding:4px 6px;border-radius:3px;margin-bottom:3px;background:#FFF0EB;border-left:2px solid var(--accent);color:var(--accent);line-height:1.4}
+.alert-log-item .ali-time{color:var(--text3);display:block;margin-top:1px}
+
+/* Alert toast — dual slot support */
+.alert-toast{position:fixed;right:24px;z-index:999;background:var(--text);color:var(--surface);border-radius:6px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.3);font-family:var(--mono);font-size:12px;min-width:270px;max-width:360px;transform:translateY(20px);opacity:0;transition:all .3s cubic-bezier(.22,.61,.36,1);pointer-events:none}
+.alert-toast.show{transform:translateY(0);opacity:1;pointer-events:all}
+.alert-toast-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.alert-toast-icon{font-size:16px}
+.alert-toast-title{font-weight:600;font-size:13px;color:#fff}
+.alert-toast-close{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:16px;padding:0;line-height:1}
+.alert-toast-close:hover{color:#fff}
+.alert-toast-kw{display:inline-block;background:var(--accent);color:#fff;font-size:9px;padding:2px 7px;border-radius:2px;margin:2px 2px 2px 0;font-weight:600}
+.alert-toast-src{color:rgba(255,255,255,.7);font-size:10px;margin-top:4px}
+.alert-toast-headline{color:rgba(255,255,255,.9);font-size:11px;margin-top:4px;line-height:1.4;border-top:1px solid rgba(255,255,255,.15);padding-top:5px}
 </style>
 </head>
 <body>
@@ -369,6 +393,9 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
       <div style="padding:6px 10px;margin-top:6px">
         <div class="field-label" style="font-size:11px;margin-bottom:6px">Time window</div>
         <select class="field-input" id="timeWindowInput" onchange="renderTrending()" style="font-size:11px;padding:5px 8px">
+          <option value="0.25">Last 15 minutes</option>
+          <option value="0.5">Last 30 minutes</option>
+          <option value="0.75">Last 45 minutes</option>
           <option value="1">Last 1 hour</option>
           <option value="6">Last 6 hours</option>
           <option value="24" selected>Last 24 hours</option>
@@ -376,6 +403,23 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
           <option value="0">All time</option>
         </select>
       </div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-title">🔔 Alert Sound</div>
+      <div style="padding:4px 10px 8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <span style="font-size:12px;color:var(--text2);font-weight:500">Keyword alerts</span>
+          <label class="alert-toggle-wrap">
+            <input type="checkbox" id="alertToggle" onchange="toggleAlertSound(this.checked)">
+            <span class="alert-toggle-track"><span class="alert-toggle-thumb"></span></span>
+          </label>
+        </div>
+        <div class="field-hint" style="margin-bottom:8px;line-height:1.5">Plays a sound when trending keywords are matched in the last 15 minutes.</div>
+        <div class="field-label" style="font-size:10px;margin-bottom:4px">Watch keywords (comma-separated)</div>
+        <textarea id="alertKeywords" class="field-input" rows="3" style="font-size:10px;padding:6px 8px;resize:vertical;line-height:1.5" placeholder="e.g. hack, exploit, sec, launch, listing">hack, exploit, breach, arrest, sec, crash, bankrupt, rug, seized</textarea>
+        <button class="btn" onclick="testAlertSound()" style="margin-top:6px;width:100%;justify-content:center;font-size:11px">▶ Test Sound</button>
+      </div>
+      <div id="alertLog" style="padding:0 10px 4px"></div>
     </div>
     <div class="sb-section">
       <div class="sb-title">Top Keywords</div>
@@ -666,11 +710,11 @@ function buildBreakoutMeter(cluster, maxCoverage) {
 // ── RENDER TRENDING ───────────────────────────────────────────────────────────
 function renderTrending() {
   const minWords   = parseInt(document.getElementById('minWordsInput').value, 10);
-  const timeHours  = parseInt(document.getElementById('timeWindowInput').value, 10);
+  const timeHours  = parseFloat(document.getElementById('timeWindowInput').value);
   const cutoffMs   = timeHours > 0 ? Date.now() - timeHours * 3_600_000 : 0;
 
   let articles = getAllArticlesForTrending();
-  if (cutoffMs > 0) articles = articles.filter(a => a.ts >= cutoffMs || a.ts === 0);
+  if (cutoffMs > 0) articles = articles.filter(a => a.ts >= cutoffMs);
 
   const clusters   = clusterArticles(articles, minWords);
   const freq        = getGlobalKeywordFreq(articles);
@@ -888,6 +932,7 @@ async function loadFromAPI() {
     updateLastUpdatedLabel();
     renderAll();
     if (curTab === 'trending') renderTrending();
+    checkForAlerts();
   } catch (err) {
     apiOnline = false;
     setBanner('error', `✗ ${err.message} — retry.`);
@@ -974,6 +1019,7 @@ async function fetchTelegram(src) {
   updateLastUpdatedLabel();
   renderAll();
   if (curTab === 'trending') renderTrending();
+  checkForAlerts();
 }
 
 function setTgCardLoading(id, on) {
@@ -1258,10 +1304,207 @@ function setFilter(f,btn){curFilter=f;curTopic=null;document.querySelectorAll('.
 function setView(v){curView=v;document.getElementById('vGrid').classList.toggle('active',v==='grid');document.getElementById('vList').classList.toggle('active',v==='list');renderAll();}
 function setTopic(key,el){curTopic=curTopic===key?null:key;curFilter='all';document.querySelectorAll('.filt-btn,.topic-item').forEach(b=>b.classList.remove('active'));if(curTopic){el.classList.add('active');}else{document.getElementById('fAll').classList.add('active');}renderAll();}
 
+// ── ALERT SOUND SYSTEM ───────────────────────────────────────────────────────
+let alertSoundOn    = true;   // DEFAULT ON
+let alertSeenKeys   = new Set();
+let alertClusterKeys= new Set();  // fingerprints for trending clusters already alerted
+let alertCheckTimer = null;
+const ALERT_WINDOW_MS = 15 * 60_000;  // always 15 min for alerts
+
+// Web Audio — synthesised "ding-dong"
+function playAlertSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = [880, 660];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.18);
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.18);
+      gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + i * 0.18 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.18 + 0.45);
+      osc.start(ctx.currentTime + i * 0.18);
+      osc.stop(ctx.currentTime + i * 0.18 + 0.5);
+    });
+  } catch(e) { console.warn('Audio ctx:', e); }
+}
+
+function testAlertSound() {
+  playAlertSound();
+  pushToast({ type:'kw', title:'Alert sound test — working!', source:'System', ts:Date.now(), allKw:['test'] });
+}
+
+function toggleAlertSound(on) {
+  alertSoundOn = on;
+  if (on) { alertSeenKeys.clear(); alertClusterKeys.clear(); startAlertChecker(); }
+  else    { stopAlertChecker(); }
+  // sync checkbox
+  const cb = document.getElementById('alertToggle');
+  if (cb) cb.checked = on;
+}
+
+function getAlertKeywords() {
+  const raw = document.getElementById('alertKeywords')?.value || '';
+  return raw.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
+}
+
+function startAlertChecker() {
+  if (alertCheckTimer) clearInterval(alertCheckTimer);
+  alertCheckTimer = setInterval(checkForAlerts, 30_000);
+  checkForAlerts();
+}
+function stopAlertChecker() {
+  if (alertCheckTimer) { clearInterval(alertCheckTimer); alertCheckTimer = null; }
+}
+
+function checkForAlerts() {
+  if (!alertSoundOn) return;
+  const keywords  = getAlertKeywords();
+  const cutoff    = Date.now() - ALERT_WINDOW_MS;
+  const toastBatch = [];   // up to 2 toasts to show
+
+  // ── 1. KEYWORD MATCH on last-15-min articles ──────────────────────────────
+  if (keywords.length) {
+    const kwHits = [];
+
+    allArticles.forEach(a => {
+      const ts = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+      if (!ts || ts < cutoff) return;
+      const title = (a.title || '').toLowerCase();
+      const fp    = `rss_${a.link || a.title}`;
+      if (alertSeenKeys.has(fp)) return;
+      const matched = keywords.filter(k => title.includes(k));
+      if (matched.length) {
+        kwHits.push({ type:'kw', allKw:matched, title:a.title, source:a.source, ts, url:a.link });
+        alertSeenKeys.add(fp);
+      }
+    });
+
+    TG_SOURCES.forEach(src => {
+      (tgBySource[src.id] || []).forEach(msg => {
+        const ts = msg.ts || 0;
+        if (!ts || ts < cutoff) return;
+        const title = (msg.title || '').toLowerCase();
+        const fp    = `tg_${msg.url || msg.title}`;
+        if (alertSeenKeys.has(fp)) return;
+        const matched = keywords.filter(k => title.includes(k));
+        if (matched.length) {
+          kwHits.push({ type:'kw', allKw:matched, title:msg.title, source:src.name, ts, url:msg.url });
+          alertSeenKeys.add(fp);
+        }
+      });
+    });
+
+    if (kwHits.length) {
+      // Sort by most-recent, take top item for first toast
+      kwHits.sort((a,b) => b.ts - a.ts);
+      toastBatch.push({ items: kwHits, label: '🔔 Keyword Alert' });
+      addAlertLogEntries(kwHits);
+    }
+  }
+
+  // ── 2. TRENDING CLUSTER alert — new cluster in last 15 min ───────────────
+  const recentArticles = getAllArticlesForTrending().filter(a => a.ts >= cutoff);
+  const minW = parseInt(document.getElementById('minWordsInput')?.value || '3', 10);
+  if (recentArticles.length >= 2) {
+    const clusters = clusterArticles(recentArticles, minW);
+    clusters.forEach(cluster => {
+      // Fingerprint = sorted titles joined
+      const fp = cluster.articles.map(a => a.title).sort().join('|').substring(0, 120);
+      if (alertClusterKeys.has(fp)) return;
+      alertClusterKeys.add(fp);
+      const kws = [...cluster.matchedWords].slice(0,4);
+      const top = [...cluster.articles].sort((a,b) => b.ts - a.ts)[0];
+      toastBatch.push({
+        items: [{ type:'trend', allKw: kws, title: top.title, source: `${cluster.articles.length} sources trending`, ts: top.ts }],
+        label: '🔥 Trending Now'
+      });
+      addAlertLogEntries([{ allKw: kws, title: top.title, source: `Trending · ${cluster.articles.length} sources`, ts: top.ts }]);
+    });
+  }
+
+  // ── Fire sound + show up to 2 toasts ────────────────────────────────────
+  if (toastBatch.length) {
+    playAlertSound();
+    // Show at most 2 toasts; if more, merge extras into second
+    const first  = toastBatch[0];
+    const second = toastBatch[1] || null;
+    showToastSlot(0, first.label,  first.items[0]);
+    if (second) {
+      setTimeout(() => showToastSlot(1, second.label, second.items[0]), 400);
+    }
+  }
+}
+
+// ── DUAL TOAST SYSTEM ─────────────────────────────────────────────────────────
+const toastTimers = [null, null];
+
+function getOrCreateToast(slot) {
+  const id = `alertToast${slot}`;
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement('div');
+    el.id = id;
+    el.className = 'alert-toast';
+    el.style.bottom = `${24 + slot * 130}px`;
+    document.body.appendChild(el);
+  }
+  return el;
+}
+
+function showToastSlot(slot, label, item) {
+  const toast = getOrCreateToast(slot);
+  const isKw  = item.type !== 'trend';
+  const kwHtml = (item.allKw||[]).slice(0,4).map(k =>
+    `<span class="alert-toast-kw" style="${isKw?'':'background:#C8390A'}">${escHtml(k)}</span>`).join('');
+
+  toast.innerHTML = `
+    <div class="alert-toast-head">
+      <span class="alert-toast-icon">${isKw ? '🔔' : '🔥'}</span>
+      <span class="alert-toast-title">${escHtml(label)}</span>
+      <button class="alert-toast-close" onclick="dismissToastSlot(${slot})">×</button>
+    </div>
+    <div style="margin-bottom:4px">${kwHtml}</div>
+    <div class="alert-toast-src">${escHtml(item.source)} · ${fmtTime(item.ts)}</div>
+    <div class="alert-toast-headline">${escHtml(item.title)}</div>
+  `;
+
+  toast.classList.remove('show');
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+  if (toastTimers[slot]) clearTimeout(toastTimers[slot]);
+  toastTimers[slot] = setTimeout(() => dismissToastSlot(slot), 10000);
+}
+
+function dismissToastSlot(slot) {
+  const toast = document.getElementById(`alertToast${slot}`);
+  if (toast) toast.classList.remove('show');
+  if (toastTimers[slot]) { clearTimeout(toastTimers[slot]); toastTimers[slot] = null; }
+}
+
+function addAlertLogEntries(items) {
+  const log = document.getElementById('alertLog');
+  if (!log) return;
+  items.slice(0, 2).forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'alert-log-item';
+    el.innerHTML = `<b>${escHtml((item.allKw||[]).slice(0,3).join(', '))}</b> — ${escHtml((item.title||'').substring(0,60))}…<span class="ali-time">${escHtml(item.source)} · ${fmtTime(item.ts)}</span>`;
+    log.insertBefore(el, log.firstChild);
+  });
+  while (log.children.length > 6) log.removeChild(log.lastChild);
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderAll();
 TG_SOURCES.forEach(s=>fetchTelegram(s));
 loadFromAPI();
+// Alerts ON by default — sync checkbox and start checker after a short delay
+// (so articles are loaded before first check)
+window.addEventListener('load', () => {
+  const cb = document.getElementById('alertToggle');
+  if (cb) cb.checked = true;
+  setTimeout(() => { if (alertSoundOn) startAlertChecker(); }, 3000);
+});
 </script>
 </body>
 </html>
