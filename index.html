@@ -38,7 +38,6 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .auto-badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;border:1px solid var(--border2);color:var(--text3);cursor:pointer;transition:all .15s;user-select:none}
 .auto-badge.on{background:#EAF9F1;border-color:#1A7A42;color:#1A7A42}
 
-/* Tab nav */
 .tab-nav{display:flex;gap:0;background:var(--bg2);border-bottom:2px solid var(--border);position:sticky;top:50px;z-index:190}
 .tab-btn{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;padding:10px 20px;border:none;background:none;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
 .tab-btn.active{background:var(--surface);color:var(--text);border-bottom-color:var(--text)}
@@ -102,7 +101,6 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .api-banner.error{background:#FFF5F5;border-color:#F5CACA;color:var(--accent)}
 .api-banner.ok{background:#F5FFF8;border-color:#A8DFBC;color:var(--green)}
 .api-banner.loading{background:#FFFCF0;border-color:#E8D88A;color:var(--gold)}
-.api-banner a{color:inherit;font-weight:600;text-decoration:underline;cursor:pointer}
 
 .section-header{display:flex;align-items:center;gap:12px;margin:28px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 .section-header:first-child{margin-top:0}
@@ -165,54 +163,87 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 .skeleton{background:linear-gradient(90deg,var(--bg) 25%,var(--border) 50%,var(--bg) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:3px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* ── TRENDING PANEL ────────────────────────────────────────────────── */
+/* ── TRENDING PANEL ── */
 .trend-content{flex:1;min-width:0;padding:22px 24px}
 .trend-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:1100px){.trend-grid{grid-template-columns:1fr}}
-
 .trend-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;text-align:center}
 .trend-stat-val{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text)}
 .trend-stat-lbl{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-top:3px}
 
-.story-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--ss);margin-bottom:16px;animation:fadeUp .3s ease both}
+/* ── NEW STORY CARD DESIGN ── */
+.story-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--ss);margin-bottom:20px;animation:fadeUp .3s ease both}
 .story-card:hover{box-shadow:var(--sm)}
-.story-rank-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border)}
-.story-rank-badge{font-family:var(--serif);font-size:20px;font-weight:900;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.rank-gold{background:#FFF8E1;color:#8a5d00;border:2px solid #B8880A}
-.rank-silver{background:#F4F4F4;color:#555;border:2px solid #B8B2A5}
-.rank-bronze{background:#FFF0EB;color:#6b2500;border:2px solid #C8390A}
-.story-headline{font-family:var(--serif);font-size:15px;font-weight:700;flex:1;line-height:1.4;color:var(--text)}
-.story-count-pill{font-family:var(--mono);font-size:10px;background:#EAF9F1;color:var(--green);border:1px solid #A8DFBC;padding:3px 10px;border-radius:12px;flex-shrink:0;white-space:nowrap}
-.story-coverage-bar{height:3px;background:var(--bg2)}
-.story-coverage-fill{height:3px;transition:width .6s cubic-bezier(.22,.61,.36,1)}
+
+/* Signal strip at top */
+.story-signal-strip{height:3px;width:100%}
+.signal-gold{background:linear-gradient(90deg,#B8880A,#e6b94a)}
+.signal-silver{background:linear-gradient(90deg,#888,#bbb)}
+.signal-bronze{background:linear-gradient(90deg,#C8390A,#e07a5f)}
+
+.story-header{display:flex;align-items:flex-start;gap:14px;padding:14px 16px 10px}
+.story-rank-ring{position:relative;width:48px;height:48px;flex-shrink:0}
+.story-rank-ring svg{position:absolute;inset:0}
+.story-rank-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:900}
+.story-header-body{flex:1;min-width:0}
+.story-signal-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.sig-badge{font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:.8px;padding:2px 8px;border-radius:2px;text-transform:uppercase}
+.sig-breaking{background:#FFF0EB;color:#8A2000;border:1px solid #FFBBA8}
+.sig-surge{background:#FFFDE7;color:#5F4400;border:1px solid #FFE082}
+.sig-alert{background:#F3E5F5;color:#4A148C;border:1px solid #CE93D8}
+.sig-exclusive{background:#E3F2FD;color:#0D47A1;border:1px solid #90CAF9}
+.story-headline{font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.38;color:var(--text)}
+.story-coverage-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.coverage-bar-wrap{flex:1;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden}
+.coverage-bar-fill{height:4px;border-radius:2px;transition:width .7s cubic-bezier(.22,.61,.36,1)}
 .fill-gold{background:var(--gold)}
 .fill-silver{background:var(--border2)}
 .fill-bronze{background:var(--accent)}
-.story-body{padding:14px 16px;display:grid;grid-template-columns:1fr 280px;gap:20px}
+.coverage-label{font-family:var(--mono);font-size:10px;color:var(--text3);white-space:nowrap}
+.coverage-count{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--green);background:#EAF9F1;border:1px solid #A8DFBC;padding:2px 9px;border-radius:10px;white-space:nowrap}
+
+/* Keyword matched pills row */
+.story-kw-row{display:flex;flex-wrap:wrap;gap:5px;padding:0 16px 10px}
+.kw-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:3px;cursor:default}
+.kw-hot{background:#FEEDE8;color:#8A2000;border:1px solid #FFBBA8}
+.kw-warm{background:#FFF8E1;color:#5F4400;border:1px solid #FFE082}
+.kw-cool{background:#E8F0FE;color:#0A4F8A;border:1px solid #BBCFF8}
+
+.story-divider{height:1px;background:var(--border);margin:0 16px}
+
+/* Breakout meter + sources side layout */
+.story-body{display:grid;grid-template-columns:1fr 260px;gap:0;border-top:1px solid var(--border)}
 @media(max-width:900px){.story-body{grid-template-columns:1fr}}
-.story-timeline{border-left:2px solid var(--border);padding-left:14px}
-.story-tl-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
-.tl-event{position:relative;margin-bottom:10px}
-.tl-event::before{content:'';position:absolute;left:-18px;top:6px;width:8px;height:8px;border-radius:50%;border:2px solid var(--border);background:var(--surface)}
+
+.story-timeline-panel{padding:14px 16px;border-right:1px solid var(--border)}
+.story-tl-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.tl-event{position:relative;padding-left:18px;margin-bottom:12px}
+.tl-event::before{content:'';position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;border:2px solid var(--border);background:var(--surface)}
 .tl-event.first-cover::before{background:var(--blue);border-color:var(--blue)}
-.tl-event-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tl-event-header{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .tl-src{font-size:12px;font-weight:600;color:var(--text)}
 .tl-time{font-family:var(--mono);font-size:10px;color:var(--text3)}
 .first-badge{font-family:var(--mono);font-size:8px;font-weight:600;background:var(--blue);color:#fff;padding:1px 7px;border-radius:2px;letter-spacing:.5px}
 .tl-title{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.4}
-.story-right{display:flex;flex-direction:column;gap:12px}
-.story-sources-section{}
+.tl-title a{color:var(--blue);text-decoration:none}
+.tl-title a:hover{text-decoration:underline}
+
+/* Right panel: meter + sources */
+.story-right-panel{padding:14px 16px;display:flex;flex-direction:column;gap:14px;background:var(--bg)}
+.meter-section{}
+.meter-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.breakout-meter{display:flex;flex-direction:column;gap:6px}
+.meter-bar-row{display:flex;align-items:center;gap:8px}
+.meter-src-name{font-size:11px;color:var(--text2);width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.meter-bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.meter-bar-fill{height:6px;border-radius:3px;transition:width .6s ease}
+.meter-count{font-family:var(--mono);font-size:10px;color:var(--text3);flex-shrink:0;min-width:20px;text-align:right}
+
+.sources-section{}
 .sources-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
-.sources-pills{display:flex;flex-wrap:wrap;gap:6px}
-.src-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text2)}
+.sources-pills{display:flex;flex-wrap:wrap;gap:5px}
+.src-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 9px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text2)}
 .src-pill-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.matched-kw-section{}
-.kw-title{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
-.kw-pills{display:flex;flex-wrap:wrap;gap:5px}
-.kw-pill{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:3px;background:var(--bg2);color:var(--text3)}
-.kw-pill.match-hot{background:#FFF0F0;color:var(--accent)}
-.kw-pill.match-warm{background:#FFF8E1;color:var(--gold)}
-.kw-pill.match-cool{background:#E8F0FE;color:var(--blue)}
 
 /* Word cloud */
 .wordcloud-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px}
@@ -254,7 +285,6 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
   </div>
 </header>
 
-<!-- Tab Navigation -->
 <div class="tab-nav">
   <button class="tab-btn active" id="tab-feeds" onclick="switchTab('feeds')">📰 Live Feeds</button>
   <button class="tab-btn" id="tab-trending" onclick="switchTab('trending')">🔥 Trending Stories</button>
@@ -323,17 +353,17 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
   </div>
 </div>
 
-<!-- ── TRENDING PANE ── -->
+<!-- TRENDING PANE -->
 <div class="layout" id="trendingPane" style="display:none">
   <aside class="sidebar">
     <div class="sb-section">
       <div class="sb-title">Trend Settings</div>
       <div style="padding:6px 10px">
-        <div class="field-label" style="font-size:11px;margin-bottom:6px">Min shared words</div>
+        <div class="field-label" style="font-size:11px;margin-bottom:6px">Min shared keywords</div>
         <select class="field-input" id="minWordsInput" onchange="renderTrending()" style="font-size:11px;padding:5px 8px">
-          <option value="2">2 words</option>
-          <option value="3" selected>3 words (default)</option>
-          <option value="4">4 words (strict)</option>
+          <option value="2">2 keywords</option>
+          <option value="3" selected>3 keywords (default)</option>
+          <option value="4">4 keywords (strict)</option>
         </select>
       </div>
       <div style="padding:6px 10px;margin-top:6px">
@@ -359,7 +389,7 @@ header{background:var(--surface);border-bottom:2px solid var(--text);height:50px
 
   <div class="trend-content">
     <div class="trend-auto-notice">
-      🔥 Trending engine clusters articles with ≥3 matching normalised words. Sorted by coverage count. Updates live with each refresh — or use <b>Auto</b> for continuous monitoring.
+      🔥 Trending engine clusters articles by <b>meaningful keywords only</b> — company names, protocols, events, people, actions. Common words, filler, and Chinese characters are excluded. Sorted by coverage count.
     </div>
     <div id="trendStats" class="trend-grid"></div>
     <div id="wordcloudPanel"></div>
@@ -380,7 +410,6 @@ const SOURCE_META = {
   'TechFlow'       : { color:'#8E44AD', domain:'techflowpost.com'   },
 };
 
-// Domain → source name map for fixing dirty rows where source was stored as a URL
 const DOMAIN_TO_SOURCE = {
   'cointelegraph.com' : 'CoinTelegraph',
   'coindesk.com'      : 'CoinDesk',
@@ -394,24 +423,20 @@ const DOMAIN_TO_SOURCE = {
 
 function fixArticleSource(article) {
   if (!article.source || /^https?:\/\//i.test(article.source) || article.source === 'Unknown') {
-    // Check for embedded [SRC:name] tag in description
     const srcTag = (article.description || '').match(/\[SRC:([^\]]+)\]/);
     if (srcTag) { article.source = srcTag[1]; return article; }
-
-    // Try domain lookup from link
     try {
       const hostname = new URL(article.link).hostname.replace(/^www\./, '');
       for (const [domain, name] of Object.entries(DOMAIN_TO_SOURCE)) {
         if (hostname.includes(domain)) { article.source = name; return article; }
       }
     } catch (_) {}
-
     article.source = 'Unknown';
   }
   return article;
 }
 
-// ── TELEGRAM SOURCES — 13 channels ───────────────────────────────────────────
+// ── TELEGRAM SOURCES ──────────────────────────────────────────────────────────
 const TG_SOURCES = [
   {id:'tg_wue', name:'Wu Blockchain EN', handle:'wublockchainenglish',         url:'https://t.me/s/wublockchainenglish',         color:'#0088CC', emoji:'📡'},
   {id:'tg_cmc', name:'CoinMarketCap',    handle:'CoinMarketCapAnnouncements',  url:'https://t.me/s/CoinMarketCapAnnouncements',  color:'#3861FB', emoji:'📊'},
@@ -422,10 +447,6 @@ const TG_SOURCES = [
   {id:'tg_ori', name:'Oriole Insights', handle:'OrioleInsights',              url:'https://t.me/s/OrioleInsights',              color:'#C0392B', emoji:'🦜'},
   {id:'tg_icd', name:'ICO Drops',       handle:'icodrops',                    url:'https://t.me/s/icodrops',                    color:'#D4AC0D', emoji:'💎'},
   {id:'tg_alt', name:'Altcoin Alerts',  handle:'Altcoin_Alerts',              url:'https://t.me/s/Altcoin_Alerts',              color:'#E74C3C', emoji:'🚨'},
-  {id:'tg_pan', name:'PA News',         handle:'ChannelPANews',               url:'https://t.me/s/ChannelPANews',               color:'#F39C12', emoji:'📰'},
-  {id:'tg_tbb', name:'The BlockBeats',  handle:'theblockbeats',               url:'https://t.me/s/theblockbeats',               color:'#27AE60', emoji:'🎵'},
-  {id:'tg_tfd', name:'TechFlow Daily',  handle:'TechFlowDaily',               url:'https://t.me/s/TechFlowDaily',               color:'#2980B9', emoji:'⚡'},
-  {id:'tg_bci', name:'BlockCast',       handle:'blockcastit',                 url:'https://t.me/s/blockcastit',                 color:'#6C3483', emoji:'📻'},
 ];
 
 const ALL_SOURCES_META = {
@@ -434,17 +455,17 @@ const ALL_SOURCES_META = {
   'CryptoDiffer': {color:'#8E44AD'}, 'PNXGRP': {color:'#16A085'},
   'CryptoDep': {color:'#2C3E50'}, 'Watcher Guru': {color:'#1A7A42'},
   'Oriole Insights': {color:'#C0392B'}, 'ICO Drops': {color:'#D4AC0D'},
-  'Altcoin Alerts': {color:'#E74C3C'}, 'PA News': {color:'#F39C12'},
-  'The BlockBeats': {color:'#27AE60'}, 'TechFlow Daily': {color:'#2980B9'},
-  'BlockCast': {color:'#6C3483'},
+  'Altcoin Alerts': {color:'#E74C3C'},
 };
 
 const ALERT_KW = ['hack','exploit','sec','arrest','crash','breach','seized','bankrupt','rug','fraud'];
 const HACK_KW  = ['hack','exploit','breach','attack','steal','drain','compromise'];
 const FUND_KW  = ['fund','raise','invest','million','billion','round','capital','vc'];
 
-// Stopwords for normalisation
+// ── STOP WORDS: massively expanded ────────────────────────────────────────────
+// All basic English words + generic crypto terms that don't identify a STORY
 const STOP_WORDS = new Set([
+  // Articles, conjunctions, prepositions
   'the','a','an','is','are','was','were','be','been','being','have','has','had',
   'do','does','did','will','would','could','should','may','might','shall','can',
   'to','of','in','for','on','with','at','by','from','up','about','into','as',
@@ -454,11 +475,41 @@ const STOP_WORDS = new Set([
   'amid','over','per','via','vs','also','new','get','set','high','all','more',
   'most','first','last','one','two','three','just','now','out','off','yet','even',
   'while','been','across','through','top','big','key','use','way','time','ago',
-  'day','week','year','amid','cent','says','sees','make','back','down','show',
-  'could','report','says','amid','hit','rise','fall','jump','drop','move','warn'
+  'day','week','year','cent','sees','make','back','down','show','amid','hit',
+  'rise','fall','jump','drop','move','warn','amid','could','report','sees',
+  // Generic finance/news words (not specific enough)
+  'price','market','markets','trade','trading','asset','assets','value','fund',
+  'funds','stock','stocks','share','shares','data','news','report','reports',
+  'says','said','claim','claims','plan','plans','push','deal','deals','rate',
+  'rates','move','moves','rally','slump','gain','loss','losses','record',
+  // Generic crypto words (every article has these — not story-specific)
+  'crypto','cryptocurrency','cryptocurrencies','blockchain','defi','nft','nfts',
+  'token','tokens','coin','coins','bitcoin','btc','ethereum','eth','altcoin',
+  'wallet','exchange','protocol','network','chain','layer','smart','contract',
+  'mining','miner','miners','staking','stake','yield','liquidity','pool',
+  'decentralized','centralized','platform','project','projects','launch','launches',
+  'listed','listing','update','upgrade','announce','announces','announced',
+  'release','released','integration','integrated','partner','partnership',
+  'community','ecosystem','mainnet','testnet','airdrop','whitepaper',
+  // Common action words too generic for clustering
+  'surge','soar','climbs','falls','drops','rises','reaches','hits','breaks',
+  'crosses','over','under','above','below','amid','following','after','ahead',
+  'amid','within','about','around','between','among','during','since','until',
+  'without','inside','outside','against','toward','towards','despite','because',
+  // Numbers written as words
+  'million','billion','trillion','thousand','hundred','percent','quarter',
+  'weekly','daily','monthly','annual','recently','latest','breaking','live',
+  // Short words always filtered
+  'its','got','via','sec','usd','gbp','eur','cny',
 ]);
 
-// ── CONFIGURATION ─────────────────────────────────────────────────────────────
+// Only allow words >= MIN_KW_LEN chars for matching
+const MIN_KW_LEN = 5;
+
+// Chinese/Japanese/Korean character ranges
+const CJK_REGEX = /[\u3000-\u9fff\uac00-\ud7af\uf900-\ufaff\u4e00-\u9fff]/;
+
+// ── APPS SCRIPT URL ───────────────────────────────────────────────────────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd6Us2ilYe0TPMw4TrumrohZxZ2XKDvJ33jUupoh71gJLVHXPstj1GSN_NyliJAuviXQ/exec';
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -474,30 +525,36 @@ let curFilter = 'all', curView = 'grid', curTopic = null;
 let autoHandle = null, autoOn = false;
 let curTab = 'feeds';
 
-// ── TRENDING ENGINE ───────────────────────────────────────────────────────────
-
-function normalizeTitle(title) {
-  return title.toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .split(/\s+/)
-    .filter(w => w.length > 3 && !STOP_WORDS.has(w))
-    .join(' ');
+// ── KEYWORD EXTRACTION ────────────────────────────────────────────────────────
+// Returns MEANINGFUL keywords only — min length, not a stopword, not CJK, not numeric-only
+function extractKeywords(title) {
+  if (!title) return [];
+  // Remove CJK entirely
+  const clean = title.replace(CJK_REGEX, ' ');
+  return clean
+    .toLowerCase()
+    .replace(/[^a-z0-9\s\-]/g, ' ')    // keep hyphens for compound terms
+    .replace(/\s+/g, ' ')
+    .trim()
+    .split(/[\s\-]+/)
+    .filter(w =>
+      w.length >= MIN_KW_LEN &&          // min length
+      !STOP_WORDS.has(w) &&              // not a stopword
+      !/^\d+$/.test(w) &&               // not pure number
+      !/^[a-z]{1,2}$/.test(w)           // not 1-2 char abbreviation
+    );
 }
 
-function getTitleWords(title) {
-  return normalizeTitle(title).split(/\s+/).filter(Boolean);
+function countSharedKeywords(titleA, titleB) {
+  const ka = new Set(extractKeywords(titleA));
+  const kb = extractKeywords(titleB);
+  return kb.filter(w => ka.has(w));
 }
 
-function countSharedWords(titleA, titleB) {
-  const wa = new Set(getTitleWords(titleA));
-  const wb = getTitleWords(titleB);
-  return wb.filter(w => wa.has(w));
-}
-
-function getGlobalWordFreq(articles) {
+function getGlobalKeywordFreq(articles) {
   const freq = {};
   articles.forEach(a => {
-    getTitleWords(a.title || '').forEach(w => { freq[w] = (freq[w] || 0) + 1; });
+    extractKeywords(a.title || '').forEach(w => { freq[w] = (freq[w] || 0) + 1; });
   });
   return freq;
 }
@@ -506,6 +563,15 @@ function srcColor(name) {
   return (ALL_SOURCES_META[name] || {}).color || '#888';
 }
 
+// Pick the best representative headline from a cluster
+// (longest informative title is often best)
+function pickHeadline(articles) {
+  // Sort by title length descending, pick the longest clean one
+  const sorted = [...articles].sort((a,b) => (b.title||'').length - (a.title||'').length);
+  return sorted[0]?.title || articles[0]?.title || '';
+}
+
+// ── CLUSTER ENGINE ────────────────────────────────────────────────────────────
 function clusterArticles(articles, minWords) {
   const used = new Array(articles.length).fill(false);
   const clusters = [];
@@ -517,7 +583,7 @@ function clusterArticles(articles, minWords) {
 
     for (let j = i + 1; j < articles.length; j++) {
       if (used[j]) continue;
-      const shared = countSharedWords(articles[i].title || '', articles[j].title || '');
+      const shared = countSharedKeywords(articles[i].title || '', articles[j].title || '');
       if (shared.length >= minWords) {
         cluster.articles.push(articles[j]);
         shared.forEach(w => cluster.matchedWords.add(w));
@@ -533,34 +599,83 @@ function clusterArticles(articles, minWords) {
 }
 
 function getAllArticlesForTrending() {
-  const rss = allArticles.map(a => ({
-    title: a.title || '',
-    source: a.source || 'Unknown',
-    ts: a.pubDate ? new Date(a.pubDate).getTime() : 0,
-    url: a.link || '#',
-    type: 'rss'
-  }));
+  const rss = allArticles
+    .filter(a => !CJK_REGEX.test(a.title || ''))  // skip Chinese titles
+    .map(a => ({
+      title: a.title || '',
+      source: a.source || 'Unknown',
+      ts: a.pubDate ? new Date(a.pubDate).getTime() : 0,
+      url: a.link || '#',
+      type: 'rss'
+    }));
   const tg = [];
   TG_SOURCES.forEach(src => {
     (tgBySource[src.id] || []).forEach(msg => {
+      if (CJK_REGEX.test(msg.title || '')) return; // skip CJK
       tg.push({ title: msg.title || '', source: src.name, ts: msg.ts || 0, url: msg.url || '#', type: 'tg' });
     });
   });
   return [...rss, ...tg];
 }
 
+// Signal detection for a cluster
+function detectSignals(cluster, articles) {
+  const signals = [];
+  const titles  = cluster.articles.map(a => (a.title||'').toLowerCase()).join(' ');
+  const sources  = new Set(cluster.articles.map(a => a.source));
+
+  if (cluster.articles.length >= 4) signals.push({cls:'sig-breaking', label:'BREAKING'});
+  if (HACK_KW.some(k => titles.includes(k))) signals.push({cls:'sig-alert', label:'SECURITY ALERT'});
+  if (FUND_KW.some(k => titles.includes(k))) signals.push({cls:'sig-surge', label:'FUNDING'});
+  if (sources.size >= 5) signals.push({cls:'sig-exclusive', label:`${sources.size} SOURCES`});
+  return signals;
+}
+
+// ── SVG RANK RING ─────────────────────────────────────────────────────────────
+function rankRingSVG(rank, color, strokeColor) {
+  const r = 20, cx = 24, cy = 24;
+  const circ = 2 * Math.PI * r;
+  const pct  = rank === 1 ? 1 : rank === 2 ? 0.72 : 0.48;
+  const dash  = circ * pct;
+  return `<svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+    <circle cx="${cx}" cy="${cy}" r="${r}" stroke="#E8E4DC" stroke-width="3"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" stroke="${strokeColor}" stroke-width="3"
+      stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"
+      style="transition:stroke-dasharray .6s ease"/>
+  </svg>`;
+}
+
+// ── BREAKOUT METER ────────────────────────────────────────────────────────────
+function buildBreakoutMeter(cluster, maxCoverage) {
+  const srcCounts = {};
+  cluster.articles.forEach(a => { srcCounts[a.source] = (srcCounts[a.source]||0)+1; });
+  const sorted = Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxCount = sorted[0]?.[1] || 1;
+  const colors = ['#C8390A','#0A4F8A','#1A7A42','#B8880A','#8A2A8A'];
+  return sorted.map(([name, cnt], i) =>
+    `<div class="meter-bar-row">
+      <div class="meter-src-name" title="${escHtml(name)}">${escHtml(name)}</div>
+      <div class="meter-bar-track">
+        <div class="meter-bar-fill" style="width:${Math.round(cnt/maxCount*100)}%;background:${colors[i]||'#888'}"></div>
+      </div>
+      <div class="meter-count">${cnt}</div>
+    </div>`
+  ).join('');
+}
+
+// ── RENDER TRENDING ───────────────────────────────────────────────────────────
 function renderTrending() {
-  const minWords    = parseInt(document.getElementById('minWordsInput').value, 10);
-  const timeHours   = parseInt(document.getElementById('timeWindowInput').value, 10);
-  const cutoffMs    = timeHours > 0 ? Date.now() - timeHours * 3_600_000 : 0;
+  const minWords   = parseInt(document.getElementById('minWordsInput').value, 10);
+  const timeHours  = parseInt(document.getElementById('timeWindowInput').value, 10);
+  const cutoffMs   = timeHours > 0 ? Date.now() - timeHours * 3_600_000 : 0;
 
   let articles = getAllArticlesForTrending();
   if (cutoffMs > 0) articles = articles.filter(a => a.ts >= cutoffMs || a.ts === 0);
 
-  const clusters  = clusterArticles(articles, minWords);
-  const freq      = getGlobalWordFreq(articles);
-  const topWords  = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 40);
-  const maxFreq   = topWords[0]?.[1] || 1;
+  const clusters   = clusterArticles(articles, minWords);
+  const freq        = getGlobalKeywordFreq(articles);
+  const topWords    = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 40);
+  const maxFreq     = topWords[0]?.[1] || 1;
 
   const covBySource = {};
   articles.forEach(a => { covBySource[a.source] = (covBySource[a.source] || 0) + 1; });
@@ -572,21 +687,22 @@ function renderTrending() {
     <div class="trend-stat"><div class="trend-stat-val">${clusters[0] ? clusters[0].articles.length : 0}</div><div class="trend-stat-lbl">top story coverage</div></div>
   `;
 
+  // Word cloud — keywords only (CJK already filtered out by extractKeywords)
   if (topWords.length) {
     const wc = document.getElementById('wordcloudPanel');
     const words = topWords.map(([w, f]) => {
       const ratio = f / maxFreq;
       const size  = Math.round(11 + ratio * 18);
-      let tier    = 'tier-4';
-      if (ratio > 0.7) tier = 'tier-1';
+      let tier = 'tier-4';
+      if (ratio > 0.7)  tier = 'tier-1';
       else if (ratio > 0.45) tier = 'tier-2';
       else if (ratio > 0.25) tier = 'tier-3';
-      return `<span class="wc-word ${tier}" style="font-size:${size}px" title="${f} mentions">${w}</span>`;
+      return `<span class="wc-word ${tier}" style="font-size:${size}px" title="${f} mentions">${escHtml(w)}</span>`;
     }).join('');
     wc.innerHTML = `<div class="wordcloud-panel">
       <div class="wc-header">
         <span class="wc-title">Live keyword cloud</span>
-        <span class="wc-live-dot"><span class="wc-live-pulse"></span> updating live</span>
+        <span class="wc-live-dot"><span class="wc-live-pulse"></span> meaningful terms only</span>
       </div>
       <div class="wc-words">${words}</div>
     </div>`;
@@ -594,20 +710,22 @@ function renderTrending() {
     document.getElementById('wordcloudPanel').innerHTML = '';
   }
 
+  // Sidebar: keywords
   const sbKw = document.getElementById('sbKeywords');
   sbKw.innerHTML = topWords.slice(0, 12).map(([w, f]) =>
     `<div style="display:flex;justify-content:space-between;padding:4px 10px;font-size:11px">
-      <span style="color:var(--text2)">${w}</span>
+      <span style="color:var(--text2)">${escHtml(w)}</span>
       <span style="font-family:var(--mono);font-size:10px;color:var(--text3)">${f}</span>
     </div>`
   ).join('');
 
+  // Sidebar: coverage
   const sbCov = document.getElementById('sbCoverage');
   const sortedSrc = Object.entries(covBySource).sort((a, b) => b[1] - a[1]).slice(0, 8);
   sbCov.innerHTML = sortedSrc.map(([name, cnt]) =>
     `<div class="src-item">
       <div class="src-color" style="background:${srcColor(name)}"></div>
-      <div class="src-info"><div class="src-name">${name}</div><div class="src-cnt">${cnt} articles</div></div>
+      <div class="src-info"><div class="src-name">${escHtml(name)}</div><div class="src-cnt">${cnt} articles</div></div>
     </div>`
   ).join('');
 
@@ -620,68 +738,85 @@ function renderTrending() {
     return;
   }
 
-  const rankInfo = [
-    { badgeCls:'rank-gold',   fillCls:'fill-gold',   label:'#1' },
-    { badgeCls:'rank-silver', fillCls:'fill-silver',  label:'#2' },
-    { badgeCls:'rank-bronze', fillCls:'fill-bronze',  label:'#3' },
+  const rankConfig = [
+    { signalCls:'signal-gold',   numColor:'#B8880A', strokeColor:'#B8880A', textColor:'#5F3300' },
+    { signalCls:'signal-silver', numColor:'#B8B2A5', strokeColor:'#888',    textColor:'#444' },
+    { signalCls:'signal-bronze', numColor:'#C8390A', strokeColor:'#C8390A', textColor:'#6b2500' },
   ];
+  const fillCls = ['fill-gold','fill-silver','fill-bronze'];
   const maxCoverage = clusters[0].articles.length;
 
   container.innerHTML = clusters.map((cluster, ri) => {
-    const info = rankInfo[ri];
-    const sorted = [...cluster.articles].sort((a, b) => (a.ts || 0) - (b.ts || 0));
-    const first  = sorted[0];
-    const sources = [...new Set(cluster.articles.map(a => a.source))];
-    const matched = [...cluster.matchedWords].slice(0, 8);
-    const pct = Math.round((cluster.articles.length / maxCoverage) * 100);
+    const cfg     = rankConfig[ri];
+    const sorted  = [...cluster.articles].sort((a, b) => (a.ts||0) - (b.ts||0));
+    const headline = pickHeadline(cluster.articles);
+    const sources  = [...new Set(cluster.articles.map(a => a.source))];
+    const matched  = [...cluster.matchedWords].slice(0, 8);
+    const pct      = Math.round((cluster.articles.length / maxCoverage) * 100);
+    const signals  = detectSignals(cluster, articles);
 
-    const timelineHTML = sorted.map((a, i) => {
+    // Keywords: classify by frequency in all articles
+    const kwHtml = matched.map((kw, i) => {
+      const f = freq[kw] || 0;
+      const cls = f > maxFreq * 0.4 ? 'kw-hot' : f > maxFreq * 0.2 ? 'kw-warm' : 'kw-cool';
+      return `<span class="kw-tag ${cls}">${escHtml(kw)}</span>`;
+    }).join('');
+
+    const signalHtml = signals.map(s => `<span class="sig-badge ${s.cls}">${s.label}</span>`).join('');
+
+    const timelineHtml = sorted.map((a, i) => {
       const dt = a.ts ? new Date(a.ts) : null;
-      const timeStr = dt ? dt.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' · ' + dt.toLocaleDateString([], {month:'short',day:'numeric'}) : 'unknown time';
+      const timeStr = dt ? dt.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' · ' + dt.toLocaleDateString([], {month:'short',day:'numeric'}) : '—';
       return `<div class="tl-event ${i === 0 ? 'first-cover' : ''}">
         <div class="tl-event-header">
           <span class="tl-src">${escHtml(a.source)}</span>
           <span class="tl-time">${timeStr}</span>
           ${i === 0 ? '<span class="first-badge">BROKE FIRST</span>' : ''}
         </div>
-        <div class="tl-title"><a href="${escHtml(a.url)}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">${escHtml(a.title)}</a></div>
+        <div class="tl-title"><a href="${escHtml(a.url)}" target="_blank" rel="noopener">${escHtml(a.title)}</a></div>
       </div>`;
     }).join('');
 
-    const pillsHTML = sources.map(s =>
+    const pillsHtml = sources.map(s =>
       `<span class="src-pill"><span class="src-pill-dot" style="background:${srcColor(s)}"></span>${escHtml(s)}</span>`
     ).join('');
 
-    const kwHTML = matched.map((kw, i) => {
-      let cls = 'match-cool';
-      if (i < 2) cls = 'match-hot';
-      else if (i < 4) cls = 'match-warm';
-      return `<span class="kw-pill ${cls}">${escHtml(kw)}</span>`;
-    }).join('');
+    const meterHtml = buildBreakoutMeter(cluster, maxCoverage);
 
-    return `<div class="story-card" style="animation-delay:${ri * 0.1}s">
-      <div class="story-rank-bar">
-        <div class="story-rank-badge ${info.badgeCls}">${info.label}</div>
-        <div class="story-headline">${escHtml(first.title)}</div>
-        <div class="story-count-pill">✓ ${cluster.articles.length} sources</div>
-      </div>
-      <div class="story-coverage-bar"><div class="story-coverage-fill ${info.fillCls}" style="width:${pct}%"></div></div>
-      <div class="story-body">
-        <div>
-          <div class="story-timeline">
-            <div class="story-tl-title">Coverage timeline — first to last</div>
-            ${timelineHTML}
+    return `<div class="story-card" style="animation-delay:${ri * 0.12}s">
+      <div class="story-signal-strip ${cfg.signalCls}"></div>
+      <div class="story-header">
+        <div class="story-rank-ring">
+          ${rankRingSVG(ri+1, cfg.numColor, cfg.strokeColor)}
+          <div class="story-rank-num" style="color:${cfg.textColor}">#${ri+1}</div>
+        </div>
+        <div class="story-header-body">
+          <div class="story-signal-row">${signalHtml}</div>
+          <div class="story-headline">${escHtml(headline)}</div>
+          <div class="story-coverage-row">
+            <div class="coverage-bar-wrap">
+              <div class="coverage-bar-fill ${fillCls[ri]}" style="width:${pct}%"></div>
+            </div>
+            <div class="coverage-label">${pct}% of top story</div>
+            <div class="coverage-count">✓ ${cluster.articles.length} sources</div>
           </div>
         </div>
-        <div class="story-right">
-          <div class="story-sources-section">
-            <div class="sources-title">Covered by</div>
-            <div class="sources-pills">${pillsHTML}</div>
+      </div>
+      ${matched.length ? `<div class="story-kw-row">${kwHtml}</div>` : ''}
+      <div class="story-body">
+        <div class="story-timeline-panel">
+          <div class="story-tl-title">Coverage timeline — first to last</div>
+          ${timelineHtml}
+        </div>
+        <div class="story-right-panel">
+          <div class="meter-section">
+            <div class="meter-title">Breakout meter</div>
+            <div class="breakout-meter">${meterHtml}</div>
           </div>
-          ${matched.length ? `<div class="matched-kw-section">
-            <div class="kw-title">Matched keywords</div>
-            <div class="kw-pills">${kwHTML}</div>
-          </div>` : ''}
+          <div class="sources-section">
+            <div class="sources-title">Covered by</div>
+            <div class="sources-pills">${pillsHtml}</div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -704,7 +839,6 @@ function switchTab(tab) {
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 function getApiUrl()     { return APPS_SCRIPT_URL; }
-function saveApiUrl(u)   { /* URL is hardcoded */ }
 function getInterval()   { return parseInt(localStorage.getItem('cd_interval') || '5', 10); }
 function saveInterval(v) { localStorage.setItem('cd_interval', String(v)); }
 
@@ -715,6 +849,7 @@ function cleanText(raw) {
     .replace(/https?:\/\/[^\s]+/g, '')
     .replace(/\bSHEETS\d+\b/gi, '')
     .replace(/[↻→←]/g, '')
+    .replace(CJK_REGEX, '')  // strip CJK from display too
     .replace(/\s{2,}/g, ' ')
     .trim();
 }
@@ -724,26 +859,29 @@ function isGarbage(text) {
   const t = text.trim();
   if (/^https?:\/\//i.test(t)) return true;
   if (/^\[.*\]\(.*\)$/.test(t)) return true;
-  // Strip punctuation/digits but keep CJK and Latin letters
   const letters = t.replace(/[\d\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/g, '');
   if (letters.length < 4) return true;
+  // Reject if mostly CJK
+  const cjkCount = (t.match(CJK_REGEX) || []).length;
+  if (cjkCount > t.length * 0.4) return true;
   return false;
 }
 
 // ── RSS FETCH ─────────────────────────────────────────────────────────────────
 async function loadFromAPI() {
-  const apiUrl = getApiUrl();
   if (isFetchingRSS) return;
   isFetchingRSS = true;
   const btn = document.getElementById('refreshAllBtn');
   btn.disabled = true; btn.textContent = '↻ Fetching…';
   setBanner('loading','⟳ Fetching from Google Sheets API…');
   try {
-    const res  = await fetch(`${apiUrl}?limit=500`, { signal: AbortSignal.timeout(20000) });
+    const res = await fetch(`${APPS_SCRIPT_URL}?limit=500`, { signal: AbortSignal.timeout(20000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     if (json.status !== 'ok') throw new Error(json.message || 'API error');
-    allArticles   = (json.articles || []).map(fixArticleSource).filter(a => !/[\u3000-\u9fff\uac00-\ud7af\uf900-\ufaff]/.test(a.title));
+    allArticles   = (json.articles || [])
+      .map(fixArticleSource)
+      .filter(a => !CJK_REGEX.test(a.title));  // strip CJK articles
     lastFetchedAt = new Date();
     apiOnline     = true;
     setBanner('ok', `✓ ${allArticles.length} RSS articles from Google Sheets · ${lastFetchedAt.toLocaleTimeString()}`);
@@ -783,6 +921,7 @@ function parseTelegramPage(html, src) {
       if (el) {
         text = el.innerHTML.replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'')
           .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
+          .replace(CJK_REGEX, '')  // remove CJK from TG messages
           .replace(/\s+/g,' ').trim();
         if (text.length >= 8) break;
       }
@@ -856,7 +995,6 @@ function toggleAuto() {
 }
 
 function setBanner(type, html) { const el=document.getElementById('apiBanner'); el.className=`api-banner ${type}`; el.innerHTML=html; }
-
 function openConfig() { document.getElementById('intervalInput').value=String(getInterval()); document.getElementById('configModal').classList.add('open'); }
 function closeConfig() { document.getElementById('configModal').classList.remove('open'); }
 function saveConfig() {
@@ -1085,11 +1223,9 @@ function buildTGCard_(src, items, idx) {
   const rfBtn=document.createElement('button'); rfBtn.className='card-action-btn tgbtn';
   rfBtn.id='rfbtn-'+src.id; rfBtn.textContent=isFetching?'⟳ …':'↻ Refresh'; rfBtn.disabled=isFetching;
   rfBtn.addEventListener('click',()=>fetchTelegram(src));
-  // Web preview link
   const extLink=document.createElement('a'); extLink.className='card-action-btn tgbtn';
   extLink.href=`https://t.me/${src.handle}`; extLink.target='_blank'; extLink.rel='noopener';
   extLink.textContent='✈ Web'; extLink.style.textDecoration='underline';
-  // Deep-link to open in Telegram app directly
   const appLink=document.createElement('a'); appLink.className='card-action-btn tgbtn';
   appLink.href=`tg://resolve?domain=${src.handle}`;
   appLink.textContent='📲 App'; appLink.style.textDecoration='underline';
